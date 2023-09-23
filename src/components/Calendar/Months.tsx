@@ -1,5 +1,8 @@
 "use client";
 import styled from "@emotion/styled";
+import { type Dispatch, type SetStateAction } from "react";
+import { setMonth } from "date-fns";
+import YearSelector from "@/components/Calendar/YearSelector";
 
 const months = [
   "January",
@@ -16,13 +19,24 @@ const months = [
   "December",
 ];
 
-const Months = () => {
+interface Props {
+  currentDate: Date;
+  setCurrentDate: Dispatch<SetStateAction<Date>>;
+}
+
+const Months = ({ currentDate, setCurrentDate }: Props) => {
   return (
     <MonthLabels>
       {months.map((month, index) => (
-        <MonthLabel key={index}>{month[0]}</MonthLabel>
+        <MonthLabel
+          key={index}
+          highlighted={currentDate.getMonth() === index}
+          onClick={() => setCurrentDate(setMonth(currentDate, index))}
+        >
+          {month[0]}
+        </MonthLabel>
       ))}
-      <YearWrapper />
+      <YearSelector currentDate={currentDate} setCurrentDate={setCurrentDate} />
     </MonthLabels>
   );
 };
@@ -35,19 +49,15 @@ const MonthLabels = styled.div`
   grid-row-start: 2;
   display: grid;
   grid-template-rows: repeat(18, 1fr);
-`;
-const MonthLabel = styled.div`
   font-weight: bold;
+`;
+const MonthLabel = styled.button<{ highlighted: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   outline: 1px solid black;
   outline-offset: -0.5px;
-`;
-const YearWrapper = styled.div`
-  outline: 1px solid black;
-  outline-offset: -0.5px;
-  grid-row-start: 13;
-  grid-row-end: 19;
+  background-color: ${({ highlighted }) =>
+    highlighted ? "var(--highlight)" : "white"};
 `;

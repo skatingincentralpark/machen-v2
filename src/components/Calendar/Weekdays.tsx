@@ -14,14 +14,16 @@ const days = [
 
 const Weekdays = () => {
   return (
-    <DayLabels>
-      {days.map((day, index) => (
-        <DayLabel key={index}>
-          <span>{day.slice(0, 1)}</span>
-          <span>{day.slice(1, 3)}</span>
-        </DayLabel>
-      ))}
-    </DayLabels>
+    <>
+      <DayLabels>
+        {days.map((day, index) => (
+          <DayLabel key={index}>
+            <span>{day.slice(0, 1)}</span>
+            <span>{day.slice(1, 3)}</span>
+          </DayLabel>
+        ))}
+      </DayLabels>
+    </>
   );
 };
 

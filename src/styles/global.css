@@ -11,3 +11,44 @@ body {
 * {
   box-sizing: border-box;
 }
+/* Variables */
+:root {
+  --highlight: #e8ff9b;
+}
+
+/* HTML */
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  transition: background-color 0.1s ease;
+  background-color: #fff;
+}
+button:focus {
+  background-color: red;
+}
+h2 {
+  margin: 0;
+  font-weight: normal;
+}
+p {
+  margin: 0;
+  font-weight: normal;
+}
+/* Utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
