@@ -13,7 +13,7 @@ const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   return (
-    <CalendarWrapper>
+    <CalendarWrapper aria-label="Calendar">
       <Months currentDate={currentDate} setCurrentDate={setCurrentDate} />
       <Weekdays />
       <DayCells currentDate={currentDate} setCurrentDate={setCurrentDate} />

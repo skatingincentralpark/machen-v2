@@ -13,6 +13,7 @@ import {
 } from "@/components/UI/Sheet";
 import { ScrollArea } from "@/components/UI/ScrollArea";
 import { media } from "@/lib/media-queries";
+import { weekdays } from "@/lib/date";
 
 interface Props {
   date: Date;
@@ -21,6 +22,12 @@ interface Props {
 }
 
 const DayCell = ({ date, currentDate, onClick }: Props) => {
+  const localeDateString = date.toLocaleDateString(undefined, {
+    dateStyle: "long",
+  });
+
+  const weekday = weekdays[date.getDay()];
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -29,6 +36,7 @@ const DayCell = ({ date, currentDate, onClick }: Props) => {
           highlighted={
             date.toLocaleDateString() === currentDate.toLocaleDateString()
           }
+          aria-label={`Select ${weekday}, ${localeDateString}`}
         >
           {date.getDate()}
         </Cell>
@@ -37,12 +45,7 @@ const DayCell = ({ date, currentDate, onClick }: Props) => {
       <SheetContent>
         <SheetContentInner startRow={2}>
           <ScrollArea>
-            <SheetTitle>
-              Note for date:{" "}
-              {date.toLocaleDateString(undefined, {
-                dateStyle: "long",
-              })}
-            </SheetTitle>
+            <SheetTitle>Note for date: {localeDateString}</SheetTitle>
             <SheetDescription className="sr-only">
               Edit your note here
             </SheetDescription>
@@ -77,11 +80,13 @@ const DayCell = ({ date, currentDate, onClick }: Props) => {
               voluptates incidunt necessitatibus rem fugiat, quis non dolor ab
               quae natus ad. Mollitia?
             </p>
-            <SheetClose asChild>
-              <button>Save changes</button>
-            </SheetClose>
+
             <SheetClose asChild>
               <button aria-label="Close">Close</button>
+            </SheetClose>
+
+            <SheetClose asChild>
+              <button>Save changes</button>
             </SheetClose>
           </ScrollArea>
         </SheetContentInner>

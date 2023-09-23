@@ -26,12 +26,13 @@ interface Props {
 
 const Months = ({ currentDate, setCurrentDate }: Props) => {
   return (
-    <MonthLabels>
+    <MonthLabels aria-label="Select a month">
       {months.map((month, index) => (
         <MonthLabel
           key={index}
           highlighted={currentDate.getMonth() === index}
           onClick={() => setCurrentDate(setMonth(currentDate, index))}
+          aria-label={`Select ${month}`}
         >
           {month[0]}
         </MonthLabel>
