@@ -2,7 +2,6 @@ html {
   font-size: 14px;
   min-height: 100vh;
   height: 100%;
-  font-weight: 300;
 }
 body {
   margin: 0;
@@ -10,6 +9,12 @@ body {
 }
 * {
   box-sizing: border-box;
+}
+button:focus-visible {
+  outline: 2px solid red;
+  outline-offset: 0px;
+  z-index: 2;
+  border-radius: 6px;
 }
 /* Variables */
 :root {
@@ -30,16 +35,29 @@ button {
   background-color: #fff;
 }
 button:focus {
-  background-color: red;
+  /* background-color: red; */
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+h1 {
+  margin: 0;
 }
 h2 {
-  margin: 0;
-  font-weight: normal;
+  margin: 2.5rem 0 0 0;
+}
+h2:first-child {
+  margin-top: 0;
 }
 p {
   margin: 0;
-  font-weight: normal;
+  line-height: 1.5;
 }
+p:not(:first-child) {
+  margin-top: 1.3rem;
+}
+
 /* Utility */
 .sr-only {
   position: absolute;
