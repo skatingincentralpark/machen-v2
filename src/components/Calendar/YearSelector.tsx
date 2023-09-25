@@ -31,7 +31,7 @@ const YearSelector = ({ currentDate, setCurrentDate }: Props) => {
       </SheetTrigger>
 
       <SheetContent>
-        <SheetContentInner>
+        <Inner>
           <SheetTitle className="sr-only">Select Year</SheetTitle>
           <SheetDescription className="sr-only">
             Change the year here
@@ -55,7 +55,7 @@ const YearSelector = ({ currentDate, setCurrentDate }: Props) => {
               );
             })}
           </ButtonContainer>
-        </SheetContentInner>
+        </Inner>
 
         <SheetClose asChild>
           <SheetOverlay />
@@ -85,6 +85,10 @@ const ButtonContainer = styled.div`
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+`;
+
+const Inner = styled(SheetContentInner)`
+  padding: 1rem;
 `;
 
 const YearButton = styled.button<{ highlighted: boolean }>`

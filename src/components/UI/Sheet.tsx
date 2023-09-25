@@ -23,7 +23,6 @@ export const SheetContent = styled(SheetPrimitive.Content)`
   grid-template-rows: 2rem repeat(6, 1fr);
 `;
 export const SheetContentInner = styled.div<SheetProps>`
-  padding: 1rem;
   pointer-events: auto;
   grid-column: ${({ startCol = 2, endCol = 3 }) => `${startCol} / ${endCol}`};
   grid-row: ${({ startRow = 5, endRow = 8 }) => `${startRow} / ${endRow}`};
@@ -38,7 +37,7 @@ export const SheetContentInner = styled.div<SheetProps>`
   align-items: start;
 `;
 export const SheetOverlay = styled(SheetPrimitive.Overlay)`
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(0, 0, 0, 0.2); */
   position: absolute;
   bottom: 0;
   left: 0;

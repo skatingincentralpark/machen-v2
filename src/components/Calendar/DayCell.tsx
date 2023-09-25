@@ -11,7 +11,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/UI/Sheet";
-import { ScrollArea } from "@/components/UI/ScrollArea";
+import { Button } from "@/components/UI/Button";
+
 import { media } from "@/lib/media-queries";
 import { weekdays } from "@/lib/date";
 
@@ -52,25 +53,25 @@ const DayCell = ({ date, currentDate, onClick }: Props) => {
       </SheetTrigger>
 
       <SheetContent>
-        <SheetContentInner startRow={2}>
-          <ScrollArea>
-            <ScrollAreaInner>
-              <SheetTitle>Note for date: {localeDateString}</SheetTitle>
-              <SheetDescription className="sr-only">
-                Edit your note here
-              </SheetDescription>
+        <SheetContentInnerV2 startRow={2}>
+          <Inner>
+            <SheetTitle>Note for date: {localeDateString}</SheetTitle>
+            <SheetDescription className="sr-only">
+              Edit your note here
+            </SheetDescription>
 
-              <Editor />
+            <Editor />
 
+            <ButtonWrapper>
               <SheetClose asChild>
-                <button aria-label="Close">Close</button>
+                <Button aria-label="Close">Close</Button>
               </SheetClose>
               <SheetClose asChild>
-                <button>Save changes</button>
+                <Button>Save changes</Button>
               </SheetClose>
-            </ScrollAreaInner>
-          </ScrollArea>
-        </SheetContentInner>
+            </ButtonWrapper>
+          </Inner>
+        </SheetContentInnerV2>
 
         <SheetClose asChild>
           <SheetOverlay />
@@ -82,11 +83,32 @@ const DayCell = ({ date, currentDate, onClick }: Props) => {
 
 export default DayCell;
 
-const ScrollAreaInner = styled.div`
+const SheetContentInnerV2 = styled(SheetContentInner)`
+  background-color: var(--subtle-off-white-coloring);
+`;
+const ButtonWrapper = styled.div`
+  display: flex;
+
+  flex-direction: row;
+  gap: 0.5rem;
+`;
+const Inner = styled.div`
+  max-width: 50rem;
+  background-color: #fff;
+  padding: 1rem;
+  margin: 0;
+  border: 1px solid #ccc;
+
   display: flex;
   flex-direction: column;
   align-items: start;
   gap: 1rem;
+  height: 100%;
+
+  ${media.sm} {
+    margin: 1rem;
+    height: calc(100% - 2rem);
+  }
 `;
 const Cell = styled.button<{ highlighted: boolean }>`
   outline: 1px solid black;

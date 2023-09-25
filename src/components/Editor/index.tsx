@@ -6,14 +6,16 @@ import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-import ToolbarPlugin from "./plugins/ToolbarPlugin";
-import defaultTheme from "./themes/default";
-
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { ListItemNode, ListNode } from "@lexical/list";
+
+import ToolbarPlugin from "./plugins/ToolbarPlugin";
+import defaultTheme from "./themes/default";
 import { ListPlugin } from "./plugins/ListPlugin";
-import { media } from "@/lib/media-queries";
 import { AutoFocusPlugin } from "./plugins/LexicalAutoFocusPlugin";
+
+import { media } from "@/lib/media-queries";
+import { ScrollArea } from "@/components/UI/ScrollArea";
 
 function onError(error: Error) {
   console.error(error);
@@ -28,10 +30,10 @@ function Editor() {
   };
 
   return (
-    <Wrapper>
-      <LexicalComposer initialConfig={initialConfig}>
-        <EditorContainer>
-          <ToolbarPlugin />
+    <LexicalComposer initialConfig={initialConfig}>
+      <EditorContainer>
+        <ToolbarPlugin />
+        <ScrollArea>
           <EditorInner>
             <AutoFocusPlugin />
             <RichTextPlugin
@@ -41,34 +43,39 @@ function Editor() {
             />
             <ListPlugin />
           </EditorInner>
-        </EditorContainer>
-      </LexicalComposer>
-    </Wrapper>
+        </ScrollArea>
+      </EditorContainer>
+    </LexicalComposer>
   );
 }
 
 export default Editor;
 
-const Wrapper = styled.div``;
 const EditorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  outline-offset: -0.5px;
   gap: 1rem;
   background: #fff;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  border-radius: 3px;
+
+  width: 100%;
+  border-radius: 8px;
+  height: 70%;
+  position: relative;
+
+  flex-grow: 1;
 `;
 const EditorInner = styled.div`
   background: #fff;
   position: relative;
+  height: 100%;
+  width: 100%;
 `;
 const SContentEditable = styled(ContentEditable)`
-  border: 1px solid #ccc;
   border-radius: 3px;
   min-height: 150px;
-  max-height: 70%;
+  height: 100%;
+  width: 100%;
   resize: none;
   font-size: 15px;
   caret-color: rgb(5, 5, 5);

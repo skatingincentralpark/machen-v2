@@ -1,10 +1,19 @@
 import styled from "@emotion/styled";
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 
-export const ScrollArea = ({ children }: { children: React.ReactNode }) => (
+interface Viewport {
+  padding?: string;
+}
+interface Props {
+  children: React.ReactNode;
+  viewport?: Viewport;
+  orientation?: "vertical" | "horizontal";
+}
+
+export const ScrollArea = ({ children, viewport, orientation }: Props) => (
   <ScrollAreaRoot>
-    <ScrollAreaViewport>{children}</ScrollAreaViewport>
-    <ScrollAreaScrollBar orientation="vertical">
+    <ScrollAreaViewport {...viewport}>{children}</ScrollAreaViewport>
+    <ScrollAreaScrollBar orientation={orientation || "vertical"}>
       <ScrollAreaThumb />
     </ScrollAreaScrollBar>
     <ScrollAreaCorner />
@@ -15,30 +24,31 @@ const ScrollAreaRoot = styled(ScrollAreaPrimitive.Root)`
   position: relative;
   overflow: hidden;
   --scrollbar-size: 10px;
+  height: 100%;
+  border-radius: inherit;
 `;
 
-const ScrollAreaViewport = styled(ScrollAreaPrimitive.Viewport)`
+const ScrollAreaViewport = styled(ScrollAreaPrimitive.Viewport)<Viewport>`
   position: relative;
   overflow: auto;
+  border: 1px solid #ccc;
   width: 100%;
   height: 100%;
   border-radius: inherit;
-  padding-right: 2px;
+  padding: ${(props) => props.padding || 0};
+
+  & > div {
+    height: 100%;
+  }
 `;
 
 const ScrollAreaScrollBar = styled(ScrollAreaPrimitive.Scrollbar)`
   display: flex;
-  /* ensures no selection */
   user-select: none;
-  /* disable browser handling of all panning and zooming gestures on touch devices */
   touch-action: none;
   padding: 2px;
-  background: lightgray;
   transition: background 160ms ease-out;
 
-  &:hover {
-    background: #b8b8b8;
-  }
   &[data-orientation="vertical"] {
     width: var(--scrollbar-size);
   }
@@ -48,22 +58,8 @@ const ScrollAreaScrollBar = styled(ScrollAreaPrimitive.Scrollbar)`
   }
 `;
 const ScrollAreaThumb = styled(ScrollAreaPrimitive.Thumb)`
-  & {
-    flex: 1;
-    background: gray;
-    position: relative;
-  }
-  /* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    min-width: 44px;
-    min-height: 44px;
-  }
+  flex: 1;
+  background: gray;
+  position: relative;
 `;
 const ScrollAreaCorner = styled(ScrollAreaPrimitive.Corner)``;
