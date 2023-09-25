@@ -29,10 +29,9 @@ const CalendarWrapper = styled.div`
   display: grid;
   grid-template-columns: 2rem auto;
   grid-template-rows: 2rem auto;
-  max-width: 800px;
   box-sizing: border-box;
   font-size: 14px;
-  max-width: 800px;
+  max-width: 900px;
   height: 80vh;
 
   ${media["3xl"]} {
