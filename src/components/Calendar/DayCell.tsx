@@ -104,10 +104,12 @@ const Inner = styled.div`
   align-items: start;
   gap: 1rem;
   height: 100%;
+  width: 100%;
 
   ${media.sm} {
     margin: 1rem;
     height: calc(100% - 2rem);
+    width: calc(100% - 2rem);
   }
 `;
 const Cell = styled.button<{ highlighted: boolean }>`
