@@ -15,6 +15,7 @@ import {
   REMOVE_LIST_COMMAND,
 } from "@lexical/list";
 import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
+import { Button } from "@/components/UI/Button";
 
 const blockTypeToBlockName: Record<string, string> = {
   code: "Code Block",
@@ -116,10 +117,9 @@ function BlockOptionsDropdownList({ editor, blockType }: Props) {
   return (
     <DropdownMenu.Root open={open} onOpenChange={setOpen}>
       <DropdownMenu.Trigger asChild>
-        <button aria-label="Formatting Options">
-          <span className={"icon block-type " + blockType} />
+        <Button aria-label="Formatting Options">
           <span className="text">{blockTypeToBlockName[blockType]}</span>
-        </button>
+        </Button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
@@ -129,46 +129,46 @@ function BlockOptionsDropdownList({ editor, blockType }: Props) {
           align="start"
         >
           <DropdownMenu.Item asChild>
-            <button className="item" onClick={formatParagraph}>
+            <Button className="item" onClick={formatParagraph}>
               <span className="icon paragraph" />
               <span className="text">Normal</span>
               {blockType === "paragraph" && <span className="active" />}
-            </button>
+            </Button>
           </DropdownMenu.Item>
           <DropdownMenu.Item asChild>
-            <button className="item" onClick={formatLargeHeading}>
+            <Button className="item" onClick={formatLargeHeading}>
               <span className="icon large-heading" />
               <span className="text">Large Heading</span>
               {blockType === "h1" && <span className="active" />}
-            </button>
+            </Button>
           </DropdownMenu.Item>
           <DropdownMenu.Item asChild>
-            <button className="item" onClick={formatSmallHeading}>
+            <Button className="item" onClick={formatSmallHeading}>
               <span className="icon small-heading" />
               <span className="text">Small Heading</span>
               {blockType === "h2" && <span className="active" />}
-            </button>
+            </Button>
           </DropdownMenu.Item>
           <DropdownMenu.Item asChild>
-            <button className="item" onClick={formatBulletList}>
+            <Button className="item" onClick={formatBulletList}>
               <span className="icon bullet-list" />
               <span className="text">Bullet List</span>
               {blockType === "ul" && <span className="active" />}
-            </button>
+            </Button>
           </DropdownMenu.Item>
           <DropdownMenu.Item asChild>
-            <button className="item" onClick={formatNumberedList}>
+            <Button className="item" onClick={formatNumberedList}>
               <span className="icon numbered-list" />
               <span className="text">Numbered List</span>
               {blockType === "ol" && <span className="active" />}
-            </button>
+            </Button>
           </DropdownMenu.Item>
           <DropdownMenu.Item asChild>
-            <button className="item" onClick={formatQuote}>
+            <Button className="item" onClick={formatQuote}>
               <span className="icon quote" />
               <span className="text">Quote</span>
               {blockType === "quote" && <span className="active" />}
-            </button>
+            </Button>
           </DropdownMenu.Item>
         </DropdownMenuContent>
       </DropdownMenu.Portal>
@@ -185,13 +185,7 @@ const DropdownMenuContent = styled(DropdownMenu.Content)`
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
   padding: 0.5rem;
   border: 1px solid #ccc;
-
-  & > button {
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 0.25rem 0.5rem;
-  }
 `;
