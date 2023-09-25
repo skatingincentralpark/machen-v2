@@ -1,6 +1,7 @@
 "use client";
 import styled from "@emotion/styled";
 import Calendar from "@/components/Calendar";
+import { media } from "@/lib/media-queries";
 
 export default function Home() {
   return (
@@ -15,5 +16,9 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: end;
-  padding: 2rem;
+  padding: 1rem;
+
+  ${media.sm} {
+    padding: 2rem;
+  }
 `;
