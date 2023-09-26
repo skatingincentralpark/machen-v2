@@ -61,4 +61,5 @@ const MonthLabel = styled.button<{ highlighted: boolean }>`
   outline-offset: -0.5px;
   background-color: ${({ highlighted }) =>
     highlighted ? "var(--highlight)" : "white"};
+  transition: var(--cell-transition);
 `;

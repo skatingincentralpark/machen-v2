@@ -12,6 +12,7 @@ import {
 } from "@/components/UI/Sheet";
 import { type Dispatch, type SetStateAction } from "react";
 import { setYear } from "date-fns";
+import { Button } from "../UI/Button";
 
 interface Props {
   currentDate: Date;
@@ -37,11 +38,10 @@ const YearSelector = ({ currentDate, setCurrentDate }: Props) => {
             Change the year here
           </SheetDescription>
 
-          <SheetClose asChild>
-            <button aria-label="Close">Close</button>
-          </SheetClose>
-
           <ButtonContainer>
+            <SheetClose asChild>
+              <Button aria-label="Close">Close</Button>
+            </SheetClose>
             {years.map((y) => {
               return (
                 <YearButton
@@ -91,7 +91,7 @@ const Inner = styled(SheetContentInner)`
   padding: 1rem;
 `;
 
-const YearButton = styled.button<{ highlighted: boolean }>`
+const YearButton = styled(Button)<{ highlighted: boolean }>`
   background-color: ${({ highlighted }) =>
     highlighted ? "var(--highlight)" : "white"};
 `;

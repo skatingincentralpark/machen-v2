@@ -34,15 +34,14 @@ const CalendarWrapper = styled.div`
   max-width: 900px;
   height: 80vh;
 
-  ${media["3xl"]} {
-    max-width: 1200px;
+  ${media.sm} {
+    height: auto;
   }
-
   ${media.md} {
     grid-template-columns: 2rem repeat(7, 1fr) 15rem;
   }
 
-  ${media.sm} {
-    height: auto;
+  ${media["3xl"]} {
+    max-width: 1200px;
   }
 `;
