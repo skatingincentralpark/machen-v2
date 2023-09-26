@@ -7,10 +7,10 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 
 import { SheetClose } from "@/components/UI/Sheet";
 import { Button } from "@/components/UI/Button";
-import useLexicalComposer from "@/components/Editor/shared/useLexicalComposer";
 import { default as LexicalEditorComponent } from "@/components/Editor";
 
 import { type NotesData } from "@/types/note";
+import LexicalComposer from "@/components/Editor/LexicalComposer";
 
 export interface NoteEditorProps {
   currentDate: Date;
@@ -19,8 +19,6 @@ export interface NoteEditorProps {
 }
 
 const NoteEditor = (props: NoteEditorProps) => {
-  const LexicalComposer = useLexicalComposer();
-
   return (
     <LexicalComposer>
       <WrappedComponents {...props} />
