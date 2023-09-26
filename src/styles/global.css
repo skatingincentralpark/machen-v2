@@ -12,8 +12,8 @@ body {
   box-sizing: border-box;
 }
 button:focus-visible {
-  outline: 2px dashed red;
-  outline-offset: -7px;
+  outline: 3px dashed red;
+  outline-offset: -2px;
   z-index: 2;
 }
 /* Variables */
