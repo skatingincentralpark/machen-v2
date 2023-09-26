@@ -37,7 +37,6 @@ export const SheetContentInner = styled.div<SheetProps>`
   align-items: start;
 `;
 export const SheetOverlay = styled(SheetPrimitive.Overlay)`
-  /* background-color: rgba(0, 0, 0, 0.2); */
   position: absolute;
   bottom: 0;
   left: 0;

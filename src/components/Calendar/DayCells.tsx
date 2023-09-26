@@ -1,5 +1,5 @@
 "use client";
-import { type Dispatch, type SetStateAction, useState, useEffect } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import styled from "@emotion/styled";
 import {
   eachDayOfInterval,
@@ -11,7 +11,7 @@ import {
   subWeeks,
 } from "date-fns";
 import DayCell from "@/components/Calendar/DayCell";
-import { type NotesData } from "@/types/note";
+import { useNotes } from "@/context/NotesContext";
 
 interface Props {
   currentDate: Date;
@@ -19,30 +19,7 @@ interface Props {
 }
 
 const DayCells = ({ currentDate, setCurrentDate }: Props) => {
-  const [notes, setNotes] = useState<NotesData>({});
-
-  useEffect(() => {
-    function getDataFromStorage() {
-      // getting stored value
-      const machenData = localStorage.getItem("machen-data");
-      if (machenData === null) return {};
-
-      const initialValue: unknown = JSON.parse(machenData);
-
-      const assert = (value: unknown): value is NotesData => {
-        if (typeof value !== "object" || value === null) return false;
-        return true;
-      };
-
-      if (!assert(initialValue)) {
-        throw new Error("Something went wrong retreiving notes data.");
-      }
-
-      return initialValue;
-    }
-
-    setNotes(getDataFromStorage());
-  }, [setNotes]);
+  const { notes, setNotes } = useNotes();
 
   interface Day {
     text: string | undefined;
