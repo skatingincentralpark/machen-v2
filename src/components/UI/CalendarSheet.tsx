@@ -34,7 +34,6 @@ export const CalendarSheetContentInner = styled.div<SheetProps>`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  align-items: start;
 `;
 export const CalendarSheetOverlay = styled(SheetPrimitive.Overlay)`
   position: absolute;
