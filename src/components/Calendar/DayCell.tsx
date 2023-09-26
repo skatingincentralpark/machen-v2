@@ -11,12 +11,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/UI/Sheet";
-import { Button } from "@/components/UI/Button";
 
 import { media } from "@/lib/media-queries";
 import { weekdays } from "@/lib/date";
 
 import dynamic from "next/dynamic";
+
+import { type Dispatch, type SetStateAction } from "react";
+import { type NotesData } from "@/types/note";
+import { type LexicalEditor } from "lexical";
 
 const Editor = dynamic(() => import("@/components/Editor"), {
   ssr: false,
@@ -29,23 +32,71 @@ interface Props {
   date: Date;
   currentDate: Date;
   onClick: (date: Date) => void;
+  text: string | undefined;
+  setNotes: Dispatch<SetStateAction<NotesData>>;
 }
 
-const DayCell = ({ date, currentDate, onClick }: Props) => {
+const DayCell = ({ date, currentDate, onClick, text, setNotes }: Props) => {
   const localeDateString = date.toLocaleDateString(undefined, {
     dateStyle: "long",
   });
 
   const weekday = weekdays[date.getDay()];
 
+  function saveNote(editor: LexicalEditor, isEmpty: () => boolean) {
+    setNotes((prevNotes) => {
+      const editorStateJson = JSON.stringify(editor.getEditorState());
+
+      const month = currentDate.getMonth();
+      const day = currentDate.getDate();
+      const year = currentDate.getFullYear();
+
+      const newNotes = {
+        ...prevNotes,
+      };
+
+      if (isEmpty()) {
+        delete newNotes[year]?.[month]?.[day];
+      } else {
+        newNotes[year] = {
+          ...newNotes[year],
+          [month]: {
+            ...newNotes[year]?.[month],
+            [day]: { text: editorStateJson },
+          },
+        };
+      }
+
+      localStorage.setItem("machen-data", JSON.stringify(newNotes));
+
+      return newNotes;
+    });
+  }
+
+  function deleteNote() {
+    setNotes((prevNotes) => {
+      const month = currentDate.getMonth();
+      const day = currentDate.getDate();
+      const year = currentDate.getFullYear();
+
+      const newNotes = {
+        ...prevNotes,
+      };
+      delete newNotes[year]?.[month]?.[day];
+      localStorage.setItem("machen-data", JSON.stringify(newNotes));
+      return newNotes;
+    });
+  }
+
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Cell
           onClick={() => onClick(date)}
-          highlighted={
+          isSelected={
             date.toLocaleDateString() === currentDate.toLocaleDateString()
           }
+          hasNote={!!text}
           aria-label={`Select ${weekday}, ${localeDateString}`}
         >
           {date.getDate()}
@@ -60,16 +111,11 @@ const DayCell = ({ date, currentDate, onClick }: Props) => {
               Edit your note here
             </SheetDescription>
 
-            <Editor />
-
-            <ButtonWrapper>
-              <SheetClose asChild>
-                <Button aria-label="Close">Close</Button>
-              </SheetClose>
-              <SheetClose asChild>
-                <Button>Save changes</Button>
-              </SheetClose>
-            </ButtonWrapper>
+            <Editor
+              editorStateString={text}
+              save={saveNote}
+              deleteText={deleteNote}
+            />
           </Inner>
         </SheetContentInnerV2>
 
@@ -85,12 +131,6 @@ export default DayCell;
 
 const SheetContentInnerV2 = styled(SheetContentInner)`
   background-color: var(--subtle-off-white-coloring);
-`;
-const ButtonWrapper = styled.div`
-  display: flex;
-
-  flex-direction: row;
-  gap: 0.5rem;
 `;
 const Inner = styled.div`
   max-width: 50rem;
@@ -112,15 +152,16 @@ const Inner = styled.div`
     width: calc(100% - 2rem);
   }
 `;
-const Cell = styled.button<{ highlighted: boolean }>`
+const Cell = styled.button<{ isSelected: boolean; hasNote: boolean }>`
   outline: 1px solid black;
   outline-offset: -0.5px;
   aspect-ratio: initial;
   width: 100%;
-  background-color: ${({ highlighted }) =>
-    highlighted ? "var(--highlight)" : "white"};
+  color: ${({ isSelected }) => (isSelected ? "red" : "#000")};
+  background-color: ${({ hasNote }) => (hasNote ? "var(--highlight)" : "#fff")};
   display: flex;
   padding: 0.5rem;
+  transition: var(--cell-transition);
 
   ${media.sm} {
     aspect-ratio: 1;

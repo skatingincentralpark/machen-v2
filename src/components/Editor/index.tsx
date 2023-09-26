@@ -1,13 +1,16 @@
 "use client";
 
 import styled from "@emotion/styled";
+import { useEffect } from "react";
 
+import { $getRoot, type LexicalEditor } from "lexical";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { ListItemNode, ListNode } from "@lexical/list";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import defaultTheme from "./themes/default";
@@ -15,13 +18,21 @@ import { ListPlugin } from "./plugins/ListPlugin";
 import { AutoFocusPlugin } from "./plugins/LexicalAutoFocusPlugin";
 
 import { media } from "@/lib/media-queries";
+import { SheetClose } from "@/components/UI/Sheet";
 import { ScrollArea } from "@/components/UI/ScrollArea";
+import { Button } from "@/components/UI/Button";
 
 function onError(error: Error) {
   console.error(error);
 }
 
-function Editor() {
+interface Props {
+  editorStateString: string | undefined;
+  save: (editor: LexicalEditor, isEmpty: () => boolean) => void;
+  deleteText: () => void;
+}
+
+function Editor(props: Props) {
   const initialConfig = {
     namespace: "MyEditor",
     onError,
@@ -32,20 +43,63 @@ function Editor() {
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <EditorContainer>
-        <ToolbarPlugin />
-        <ScrollArea>
-          <EditorInner>
-            <AutoFocusPlugin />
-            <RichTextPlugin
-              contentEditable={<SContentEditable className="editor-input" />}
-              placeholder={<Placeholder>Enter some text...</Placeholder>}
-              ErrorBoundary={LexicalErrorBoundary}
-            />
-            <ListPlugin />
-          </EditorInner>
-        </ScrollArea>
+        <EditorComponents {...props} />
       </EditorContainer>
     </LexicalComposer>
+  );
+}
+
+function EditorComponents({ editorStateString, save, deleteText }: Props) {
+  const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    if (!editorStateString) return;
+    editor.update(() => {
+      const editorState = editor.parseEditorState(editorStateString);
+      editor.setEditorState(editorState);
+    });
+  }, [editorStateString, editor]);
+
+  const isEditorEmpty = () =>
+    editor.getEditorState().read(() => {
+      const root = $getRoot();
+      const rootFirstChild = root.getFirstChild();
+      if (!rootFirstChild) return true;
+
+      const fcEmptyFunc = rootFirstChild.isEmpty as () => boolean;
+      const fcEmpty = fcEmptyFunc && fcEmptyFunc();
+      const isEmpty = fcEmpty && root.getChildrenSize() === 1;
+      return isEmpty;
+    });
+
+  return (
+    <>
+      <ToolbarPlugin />
+      <ScrollArea>
+        <EditorInner>
+          <AutoFocusPlugin />
+          <RichTextPlugin
+            contentEditable={<SContentEditable className="editor-input" />}
+            placeholder={<Placeholder>Enter some text...</Placeholder>}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <ListPlugin />
+        </EditorInner>
+      </ScrollArea>
+      <ButtonWrapper>
+        <SheetClose asChild>
+          <Button aria-label="Close editor">Close</Button>
+        </SheetClose>
+        <SheetClose asChild>
+          <Button onClick={() => save(editor, isEditorEmpty)}>Save</Button>
+        </SheetClose>
+        <SheetClose asChild>
+          <Button onClick={deleteText} variant="destructive">
+            Delete Note
+          </Button>
+        </SheetClose>
+      </ButtonWrapper>
+    </>
   );
 }
 
@@ -70,6 +124,11 @@ const EditorInner = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
+`;
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
 `;
 const SContentEditable = styled(ContentEditable)`
   border-radius: 3px;
