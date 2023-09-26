@@ -1,7 +1,10 @@
 "use client";
 import styled from "@emotion/styled";
 
-import { Sheet, SheetTrigger } from "@/components/UI/Sheet";
+import {
+  CalendarSheet,
+  CalendarSheetTrigger,
+} from "@/components/UI/CalendarSheet";
 
 import { media } from "@/lib/media-queries";
 import { weekdays } from "@/lib/date";
@@ -26,8 +29,8 @@ const DayCell = ({ date, currentDate, onClick, text, setNotes }: Props) => {
   const weekday = weekdays[date.getDay()];
 
   return (
-    <Sheet>
-      <SheetTrigger asChild>
+    <CalendarSheet>
+      <CalendarSheetTrigger asChild>
         <Cell
           onClick={() => onClick(date)}
           isSelected={
@@ -38,7 +41,7 @@ const DayCell = ({ date, currentDate, onClick, text, setNotes }: Props) => {
         >
           {date.getDate()}
         </Cell>
-      </SheetTrigger>
+      </CalendarSheetTrigger>
 
       <DayCellSheetContent
         currentDate={currentDate}
@@ -46,7 +49,7 @@ const DayCell = ({ date, currentDate, onClick, text, setNotes }: Props) => {
         setNotes={setNotes}
         localeDateString={localeDateString}
       />
-    </Sheet>
+    </CalendarSheet>
   );
 };
 

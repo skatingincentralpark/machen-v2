@@ -2,7 +2,6 @@
 import { useNotes } from "@/context/NotesContext";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { Button } from "./UI/Button";
 
 const Header = () => {
   const [localeDateTime, setLocaleDateTime] = useState<string>("");

@@ -5,7 +5,7 @@ import { type Dispatch, type SetStateAction } from "react";
 import { $getRoot, type LexicalEditor } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
-import { SheetClose } from "@/components/UI/Sheet";
+import { CalendarSheetClose } from "@/components/UI/CalendarSheet";
 import { Button } from "@/components/UI/Button";
 import { default as LexicalEditorComponent } from "@/components/Editor";
 
@@ -122,17 +122,17 @@ const WrappedComponents = ({
       <LexicalEditorComponent editorStateString={text} />
 
       <ButtonWrapper>
-        <SheetClose asChild>
+        <CalendarSheetClose asChild>
           <Button aria-label="Close editor">Close</Button>
-        </SheetClose>
-        <SheetClose asChild>
+        </CalendarSheetClose>
+        <CalendarSheetClose asChild>
           <Button onClick={() => saveNote(editor)}>Save</Button>
-        </SheetClose>
-        <SheetClose asChild>
+        </CalendarSheetClose>
+        <CalendarSheetClose asChild>
           <Button onClick={deleteNote} variant="destructive">
             Delete Note
           </Button>
-        </SheetClose>
+        </CalendarSheetClose>
       </ButtonWrapper>
     </>
   );

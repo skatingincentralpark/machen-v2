@@ -8,10 +8,10 @@ interface SheetProps {
   endCol?: number;
 }
 
-export const Sheet = SheetPrimitive.Root;
-export const SheetTrigger = SheetPrimitive.Trigger;
-export const SheetClose = SheetPrimitive.Close;
-export const SheetContent = styled(SheetPrimitive.Content)`
+export const CalendarSheet = SheetPrimitive.Root;
+export const CalendarSheetTrigger = SheetPrimitive.Trigger;
+export const CalendarSheetClose = SheetPrimitive.Close;
+export const CalendarSheetContent = styled(SheetPrimitive.Content)`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -22,7 +22,7 @@ export const SheetContent = styled(SheetPrimitive.Content)`
   grid-template-columns: 2rem auto;
   grid-template-rows: 2rem repeat(6, 1fr);
 `;
-export const SheetContentInner = styled.div<SheetProps>`
+export const CalendarSheetContentInner = styled.div<SheetProps>`
   pointer-events: auto;
   grid-column: ${({ startCol = 2, endCol = 3 }) => `${startCol} / ${endCol}`};
   grid-row: ${({ startRow = 5, endRow = 8 }) => `${startRow} / ${endRow}`};
@@ -36,13 +36,13 @@ export const SheetContentInner = styled.div<SheetProps>`
   gap: 0.5rem;
   align-items: start;
 `;
-export const SheetOverlay = styled(SheetPrimitive.Overlay)`
+export const CalendarSheetOverlay = styled(SheetPrimitive.Overlay)`
   position: absolute;
   bottom: 0;
   left: 0;
   height: 100%;
   width: 100%;
 `;
-export const SheetPortal = SheetPrimitive.Portal;
-export const SheetTitle = SheetPrimitive.Title;
-export const SheetDescription = SheetPrimitive.Description;
+export const CalendarSheetPortal = SheetPrimitive.Portal;
+export const CalendarSheetTitle = SheetPrimitive.Title;
+export const CalendarSheetDescription = SheetPrimitive.Description;

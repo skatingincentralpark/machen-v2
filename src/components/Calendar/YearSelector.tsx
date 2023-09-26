@@ -1,15 +1,15 @@
 "use client";
 import styled from "@emotion/styled";
 import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetContentInner,
-  SheetDescription,
-  SheetOverlay,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/UI/Sheet";
+  CalendarSheet,
+  CalendarSheetClose,
+  CalendarSheetContent,
+  CalendarSheetContentInner,
+  CalendarSheetDescription,
+  CalendarSheetOverlay,
+  CalendarSheetTitle,
+  CalendarSheetTrigger,
+} from "@/components/UI/CalendarSheet";
 import { type Dispatch, type SetStateAction } from "react";
 import { setYear } from "date-fns";
 import { Button } from "../UI/Button";
@@ -24,24 +24,26 @@ const YearSelector = ({ currentDate, setCurrentDate }: Props) => {
   const currentYear = currentDate.getFullYear();
 
   return (
-    <Sheet>
-      <SheetTrigger asChild>
+    <CalendarSheet>
+      <CalendarSheetTrigger asChild>
         <YearTrigger>
           <div>{currentYear}</div>
         </YearTrigger>
-      </SheetTrigger>
+      </CalendarSheetTrigger>
 
-      <SheetContent>
+      <CalendarSheetContent>
         <Inner>
-          <SheetTitle className="sr-only">Select Year</SheetTitle>
-          <SheetDescription className="sr-only">
+          <CalendarSheetTitle className="sr-only">
+            Select Year
+          </CalendarSheetTitle>
+          <CalendarSheetDescription className="sr-only">
             Change the year here
-          </SheetDescription>
+          </CalendarSheetDescription>
 
           <ButtonContainer>
-            <SheetClose asChild>
+            <CalendarSheetClose asChild>
               <Button aria-label="Close">Close</Button>
-            </SheetClose>
+            </CalendarSheetClose>
             {years.map((y) => {
               return (
                 <Button
@@ -57,11 +59,11 @@ const YearSelector = ({ currentDate, setCurrentDate }: Props) => {
           </ButtonContainer>
         </Inner>
 
-        <SheetClose asChild>
-          <SheetOverlay />
-        </SheetClose>
-      </SheetContent>
-    </Sheet>
+        <CalendarSheetClose asChild>
+          <CalendarSheetOverlay />
+        </CalendarSheetClose>
+      </CalendarSheetContent>
+    </CalendarSheet>
   );
 };
 
@@ -87,6 +89,6 @@ const ButtonContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-const Inner = styled(SheetContentInner)`
+const Inner = styled(CalendarSheetContentInner)`
   padding: 1rem;
 `;

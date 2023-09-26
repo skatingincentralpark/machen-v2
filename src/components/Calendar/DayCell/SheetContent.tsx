@@ -2,13 +2,13 @@
 import styled from "@emotion/styled";
 
 import {
-  SheetClose,
-  SheetContent,
-  SheetContentInner,
-  SheetDescription,
-  SheetOverlay,
-  SheetTitle,
-} from "@/components/UI/Sheet";
+  CalendarSheetClose,
+  CalendarSheetContent,
+  CalendarSheetContentInner,
+  CalendarSheetDescription,
+  CalendarSheetOverlay,
+  CalendarSheetTitle,
+} from "@/components/UI/CalendarSheet";
 import { type NoteEditorProps } from "./NoteEditor";
 
 import { media } from "@/lib/media-queries";
@@ -25,29 +25,31 @@ interface Props extends NoteEditorProps {
   localeDateString: string;
 }
 
-const DayCellSheetContent = ({ localeDateString, ...props }: Props) => {
+const DayCellCalendarSheetContent = ({ localeDateString, ...props }: Props) => {
   return (
-    <SheetContent>
-      <SheetContentInnerV2 startRow={2}>
+    <CalendarSheetContent>
+      <CalendarSheetContentInnerV2 startRow={2}>
         <Inner>
-          <SheetTitle>Note for date: {localeDateString}</SheetTitle>
-          <SheetDescription className="sr-only">
+          <CalendarSheetTitle>
+            Note for date: {localeDateString}
+          </CalendarSheetTitle>
+          <CalendarSheetDescription className="sr-only">
             Edit your note here
-          </SheetDescription>
+          </CalendarSheetDescription>
           <NoteEditor {...props} />
         </Inner>
-      </SheetContentInnerV2>
+      </CalendarSheetContentInnerV2>
 
-      <SheetClose asChild>
-        <SheetOverlay />
-      </SheetClose>
-    </SheetContent>
+      <CalendarSheetClose asChild>
+        <CalendarSheetOverlay />
+      </CalendarSheetClose>
+    </CalendarSheetContent>
   );
 };
 
-export default DayCellSheetContent;
+export default DayCellCalendarSheetContent;
 
-const SheetContentInnerV2 = styled(SheetContentInner)`
+const CalendarSheetContentInnerV2 = styled(CalendarSheetContentInner)`
   background-color: var(--subtle-off-white-coloring);
 `;
 const Inner = styled.div`
