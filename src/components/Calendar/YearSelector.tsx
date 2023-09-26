@@ -44,14 +44,14 @@ const YearSelector = ({ currentDate, setCurrentDate }: Props) => {
             </SheetClose>
             {years.map((y) => {
               return (
-                <YearButton
+                <Button
                   key={y}
-                  highlighted={currentYear === y}
+                  variant={currentYear === y ? "active" : "primary"}
                   onClick={() => setCurrentDate(setYear(currentDate, y))}
                   aria-label={`Select ${y}`}
                 >
                   {y}
-                </YearButton>
+                </Button>
               );
             })}
           </ButtonContainer>
@@ -89,9 +89,4 @@ const ButtonContainer = styled.div`
 
 const Inner = styled(SheetContentInner)`
   padding: 1rem;
-`;
-
-const YearButton = styled(Button)<{ highlighted: boolean }>`
-  background-color: ${({ highlighted }) =>
-    highlighted ? "var(--highlight)" : "white"};
 `;
