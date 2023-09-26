@@ -66,8 +66,8 @@ function EditorComponents({ editorStateString, save, deleteText }: Props) {
       const rootFirstChild = root.getFirstChild();
       if (!rootFirstChild) return true;
 
-      const fcEmptyFunc = rootFirstChild.isEmpty as () => boolean;
-      const fcEmpty = fcEmptyFunc && fcEmptyFunc();
+      /* eslint-disable-next-line @typescript-eslint/no-unsafe-call */
+      const fcEmpty = rootFirstChild.isEmpty() as boolean;
       const isEmpty = fcEmpty && root.getChildrenSize() === 1;
       return isEmpty;
     });
