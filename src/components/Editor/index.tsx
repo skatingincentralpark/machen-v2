@@ -18,6 +18,7 @@ import { ScrollArea } from "@/components/UI/ScrollArea";
 interface Props {
   /** Pass to initialise with existing editorState */
   editorStateString?: string;
+  readOnly?: boolean;
 }
 
 /** Be sure to wrap this component in a LexicalComposer */
@@ -29,7 +30,7 @@ function Editor(props: Props) {
   );
 }
 
-function EditorComponents({ editorStateString }: Props) {
+function EditorComponents({ editorStateString, readOnly = false }: Props) {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
@@ -40,12 +41,20 @@ function EditorComponents({ editorStateString }: Props) {
     });
   }, [editorStateString, editor]);
 
+  useEffect(() => {
+    if (editor._editable === readOnly) {
+      throw new Error(
+        "Initial config passed to <LexicalComposer> needs to contain correct editable value."
+      );
+    }
+  }, [editor, readOnly]);
+
   return (
     <>
-      <ToolbarPlugin />
+      {!readOnly && <ToolbarPlugin />}
       <ScrollArea>
         <EditorInner>
-          <AutoFocusPlugin />
+          {!readOnly && <AutoFocusPlugin />}
           <RichTextPlugin
             contentEditable={<SContentEditable className="editor-input" />}
             placeholder={<Placeholder>Enter some text...</Placeholder>}
@@ -86,7 +95,6 @@ const SContentEditable = styled(ContentEditable)`
   height: 100%;
   width: 100%;
   resize: none;
-  font-size: 15px;
   caret-color: rgb(5, 5, 5);
   position: relative;
   tab-size: 1;
@@ -96,13 +104,13 @@ const SContentEditable = styled(ContentEditable)`
 
   .editor-heading-h1 {
     scroll-margin: 5rem;
-    font-size: 2.25rem;
-    line-height: 2.5rem;
+    font-size: 2rem;
+    line-height: 2.3rem;
     font-weight: 800;
     letter-spacing: -0.025em;
 
     ${media.lg} {
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       line-height: 1;
     }
   }
@@ -110,8 +118,8 @@ const SContentEditable = styled(ContentEditable)`
   .editor-heading-h2 {
     scroll-margin: 5rem;
     padding-bottom: 0.5rem;
-    font-size: 1.875rem;
-    line-height: 2.25rem;
+    font-size: 1.625rem;
+    line-height: 2.2rem;
     font-weight: 600;
     letter-spacing: -0.025em;
   }
@@ -119,7 +127,6 @@ const SContentEditable = styled(ContentEditable)`
   .editor-quote {
     margin: 0;
     margin-left: 20px;
-    font-size: 15px;
     color: rgb(101, 103, 107);
     border-left-color: rgb(206, 208, 212);
     border-left-width: 4px;

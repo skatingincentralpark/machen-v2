@@ -7,12 +7,19 @@ function onError(error: Error) {
   console.error(error);
 }
 
-const LexicalComposer = ({ children }: { children: React.ReactNode }) => {
+const LexicalComposer = ({
+  children,
+  readOnly = false,
+}: {
+  children: React.ReactNode;
+  readOnly?: boolean;
+}) => {
   const initialConfig = {
     namespace: "MyEditor",
     onError,
     theme: defaultTheme,
     nodes: [HeadingNode, ListNode, ListItemNode, QuoteNode],
+    editable: !readOnly,
   };
 
   return (
