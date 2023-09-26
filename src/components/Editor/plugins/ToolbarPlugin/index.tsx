@@ -10,6 +10,8 @@ import {
   $getSelection,
   $isRangeSelection,
   $isRootOrShadowRoot,
+  type ElementFormatType,
+  $isElementNode,
 } from "lexical";
 import {
   $findMatchingParent,
@@ -21,6 +23,7 @@ import { $isHeadingNode } from "@lexical/rich-text";
 
 import BlockOptionsDropdownList from "./BlockOptionsDropdownList";
 import { Button } from "@/components/UI/Button";
+import { getSelectedNode } from "../../utilts/getSelectedNode";
 
 const LowPriority = 1;
 
@@ -64,6 +67,7 @@ const ToolbarButtons = () => {
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isCode, setIsCode] = useState(false);
+  const [elementFormat, setElementFormat] = useState<ElementFormatType>("left");
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -104,6 +108,15 @@ const ToolbarButtons = () => {
       setIsUnderline(selection.hasFormat("underline"));
       setIsStrikethrough(selection.hasFormat("strikethrough"));
       setIsCode(selection.hasFormat("code"));
+
+      const node = getSelectedNode(selection);
+      const parent = node.getParent();
+
+      setElementFormat(
+        ($isElementNode(node)
+          ? node.getFormatType()
+          : parent?.getFormatType()) || "left"
+      );
     }
   }, [editor]);
 
@@ -135,8 +148,8 @@ const ToolbarButtons = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
           }}
-          className={"toolbar-item spaced " + (isBold ? "active" : "")}
           aria-label="Format Bold"
+          variant={isBold ? "active" : "primary"}
         >
           <span>Bold</span>
         </Button>
@@ -144,8 +157,8 @@ const ToolbarButtons = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
           }}
-          className={"toolbar-item spaced " + (isItalic ? "active" : "")}
           aria-label="Format Italics"
+          variant={isItalic ? "active" : "primary"}
         >
           <span>Italic</span>
         </Button>
@@ -153,8 +166,8 @@ const ToolbarButtons = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
           }}
-          className={"toolbar-item spaced " + (isUnderline ? "active" : "")}
           aria-label="Format Underline"
+          variant={isUnderline ? "active" : "primary"}
         >
           <span>Underline</span>
         </Button>
@@ -162,8 +175,8 @@ const ToolbarButtons = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
           }}
-          className={"toolbar-item spaced " + (isStrikethrough ? "active" : "")}
           aria-label="Format Strikethrough"
+          variant={isStrikethrough ? "active" : "primary"}
         >
           <span>Strikethrough</span>
         </Button>
@@ -171,8 +184,8 @@ const ToolbarButtons = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
           }}
-          className={"toolbar-item spaced " + (isCode ? "active" : "")}
           aria-label="Insert Code"
+          variant={isCode ? "active" : "primary"}
         >
           <span>Code</span>
         </Button>
@@ -180,8 +193,8 @@ const ToolbarButtons = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
           }}
-          className="toolbar-item spaced"
           aria-label="Left Align"
+          variant={elementFormat === "left" ? "active" : "primary"}
         >
           <span>Left Align</span>
         </Button>
@@ -189,8 +202,8 @@ const ToolbarButtons = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
           }}
-          className="toolbar-item spaced"
           aria-label="Center Align"
+          variant={elementFormat === "center" ? "active" : "primary"}
         >
           <span>Center Align</span>
         </Button>
@@ -198,8 +211,8 @@ const ToolbarButtons = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
           }}
-          className="toolbar-item spaced"
           aria-label="Right Align"
+          variant={elementFormat === "right" ? "active" : "primary"}
         >
           <span>Right Align</span>
         </Button>
@@ -207,8 +220,8 @@ const ToolbarButtons = () => {
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
           }}
-          className="toolbar-item"
           aria-label="Justify Align"
+          variant={elementFormat === "justify" ? "active" : "primary"}
         >
           <span>Justify Align</span>
         </Button>{" "}
