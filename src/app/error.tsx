@@ -22,7 +22,7 @@ export default function Error({
           If this happens again, please click delete all notes to clear local
           storage.
         </p>
-        <p>Error: {error.message}</p>
+        <ErrorText>Error: {error.message}</ErrorText>
         <br />
         <ButtonWrapper>
           <Button onClick={reset}>Try again</Button>
@@ -54,6 +54,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 20rem;
+  overflow-wrap: break-word;
+`;
+const ErrorText = styled.p`
+  font-size: 0.9rem;
+  color: red;
 `;
 const ButtonWrapper = styled.div`
   display: flex;
