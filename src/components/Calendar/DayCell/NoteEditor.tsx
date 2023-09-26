@@ -144,4 +144,5 @@ const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+  flex-wrap: wrap;
 `;
