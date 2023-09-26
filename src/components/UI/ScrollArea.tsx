@@ -3,6 +3,7 @@ import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 
 interface Viewport {
   padding?: string;
+  border?: string;
 }
 interface Props {
   children: React.ReactNode;
@@ -10,10 +11,17 @@ interface Props {
   orientation?: "vertical" | "horizontal";
 }
 
-export const ScrollArea = ({ children, viewport, orientation }: Props) => (
+export const ScrollArea = ({
+  children,
+  orientation = "vertical",
+  viewport = {
+    padding: "0",
+    border: "1px solid #ccc",
+  },
+}: Props) => (
   <ScrollAreaRoot>
     <ScrollAreaViewport {...viewport}>{children}</ScrollAreaViewport>
-    <ScrollAreaScrollBar orientation={orientation || "vertical"}>
+    <ScrollAreaScrollBar orientation={orientation}>
       <ScrollAreaThumb />
     </ScrollAreaScrollBar>
     <ScrollAreaCorner />
@@ -31,11 +39,11 @@ const ScrollAreaRoot = styled(ScrollAreaPrimitive.Root)`
 const ScrollAreaViewport = styled(ScrollAreaPrimitive.Viewport)<Viewport>`
   position: relative;
   overflow: auto;
-  border: 1px solid #ccc;
+  border: ${(props) => props.border};
   width: 100%;
   height: 100%;
   border-radius: inherit;
-  padding: ${(props) => props.padding || 0};
+  padding: ${(props) => props.padding};
 
   & > div {
     height: 100%;
