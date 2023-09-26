@@ -1,7 +1,7 @@
 "use client";
-import { useNotes } from "@/context/NotesContext";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
+import HeaderMenu from "@/components/HeaderMenu";
 
 const Header = () => {
   const [localeDateTime, setLocaleDateTime] = useState<string>("");
@@ -12,25 +12,22 @@ const Header = () => {
     setLocaleDateTime(`${date.toLocaleString()}, ${timezone}`);
   }, []);
 
-  const { setDummyNotes } = useNotes();
-
   return (
     <>
-      <HeaderEle>
-        <div>
+      <HeaderMain>
+        <Logo>
           Machen <TimeWrapper>{localeDateTime}</TimeWrapper>{" "}
-        </div>
-        <button onClick={setDummyNotes}>Set dummy notes for testing</button>
-      </HeaderEle>
+        </Logo>
+        <HeaderMenu />
+      </HeaderMain>
     </>
   );
 };
 
 export default Header;
 
-const HeaderEle = styled.header`
+const HeaderMain = styled.header`
   position: fixed;
-  padding: 2rem;
   font-weight: bold;
   display: flex;
   gap: 1rem;
@@ -46,6 +43,9 @@ const HeaderEle = styled.header`
   & > button {
     font-weight: 400;
   }
+`;
+const Logo = styled.div`
+  padding: 2rem;
 `;
 
 const TimeWrapper = styled.div`
