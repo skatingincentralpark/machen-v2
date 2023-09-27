@@ -24,18 +24,20 @@ const HeaderMenu = () => {
       <Anchor />
       <PopoverPortal>
         <HeaderMenuContent>
-          <PopoverClose asChild className="sr-only">
-            <button>Close</button>
-          </PopoverClose>
-          <p>Set dummy notes for testing</p>
           <PopoverClose asChild>
-            <HeaderButton
-              onClick={setDummyNotes}
-              aria-label="Clear local storage and set some dummy notes"
-            >
-              Set Dummy Notes
-            </HeaderButton>
+            <Button>Close</Button>
           </PopoverClose>
+          <ActionContainer>
+            <p>Set dummy notes for testing</p>
+            <PopoverClose asChild>
+              <HeaderButton
+                onClick={setDummyNotes}
+                aria-label="Clear local storage and set some dummy notes"
+              >
+                Set Dummy Notes
+              </HeaderButton>
+            </PopoverClose>
+          </ActionContainer>
         </HeaderMenuContent>
       </PopoverPortal>
     </PopoverRoot>
@@ -75,9 +77,14 @@ const HeaderMenuContent = styled(PopoverContent)`
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: space-between;
   align-items: end;
   gap: 1rem;
+`;
+const ActionContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 `;
 const HeaderButton = styled(Button)`
   width: fit-content;

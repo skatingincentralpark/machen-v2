@@ -31,7 +31,6 @@ const HeaderMain = styled.header`
   font-weight: bold;
   display: flex;
   gap: 1rem;
-  z-index: 10;
   justify-content: space-between;
   width: 100%;
 
