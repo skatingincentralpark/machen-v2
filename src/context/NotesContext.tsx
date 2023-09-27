@@ -16,10 +16,10 @@ interface INotesContext {
   setDummyNotes: () => void;
   saveNote: (
     editor: LexicalEditor,
-    currentDate: Date,
+    date: Date,
     $getRoot: () => RootNode
   ) => void;
-  deleteNote: (currentDate: Date) => void;
+  deleteNote: (date: Date) => void;
 }
 
 const Context = createContext<INotesContext>({
@@ -106,15 +106,15 @@ const NotesController = ({ children }: { children: ReactNode }) => {
 
   function saveNote(
     editor: LexicalEditor,
-    currentDate: Date,
+    date: Date,
     $getRoot: () => RootNode
   ) {
     setNotes((prevNotes) => {
       const editorStateJson = JSON.stringify(editor.getEditorState());
 
-      const month = currentDate.getMonth();
-      const day = currentDate.getDate();
-      const year = currentDate.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      const year = date.getFullYear();
 
       const newNotes = {
         ...prevNotes,
@@ -139,15 +139,21 @@ const NotesController = ({ children }: { children: ReactNode }) => {
     });
   }
 
-  function deleteNote(currentDate: Date) {
+  function deleteNote(date: Date) {
+    const confirmation = confirm("Are you sure you want to delete this note?");
+
+    if (!confirmation) return;
+
     setNotes((prevNotes) => {
-      const month = currentDate.getMonth();
-      const day = currentDate.getDate();
-      const year = currentDate.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      const year = date.getFullYear();
 
       const newNotes = {
         ...prevNotes,
       };
+      console.log(newNotes);
+      console.log(newNotes[year]);
       delete newNotes[year]?.[month]?.[day];
 
       deleteMonthIfEmpty(newNotes, year, month);
