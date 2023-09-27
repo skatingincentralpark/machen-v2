@@ -1,6 +1,5 @@
 "use client";
 import styled from "@emotion/styled";
-import { type Dispatch, type SetStateAction } from "react";
 
 import { $getRoot, type LexicalEditor } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -11,11 +10,11 @@ import { default as LexicalEditorComponent } from "@/components/Editor";
 
 import { type NotesData } from "@/types/note";
 import LexicalComposer from "@/components/Editor/LexicalComposer";
+import { useNotes } from "@/context/NotesContext";
 
 export interface NoteEditorProps {
   currentDate: Date;
   text: string | undefined;
-  setNotes: Dispatch<SetStateAction<NotesData>>;
 }
 
 const NoteEditor = (props: NoteEditorProps) => {
@@ -26,12 +25,9 @@ const NoteEditor = (props: NoteEditorProps) => {
   );
 };
 
-const WrappedComponents = ({
-  currentDate,
-  text,
-  setNotes,
-}: NoteEditorProps) => {
+const WrappedComponents = ({ currentDate, text }: NoteEditorProps) => {
   const [editor] = useLexicalComposerContext();
+  const { setNotes } = useNotes();
 
   function isEditorEmpty() {
     return editor.getEditorState().read(() => {

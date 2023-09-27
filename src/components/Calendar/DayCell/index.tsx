@@ -9,8 +9,6 @@ import {
 import { media } from "@/lib/media-queries";
 import { weekdays } from "@/lib/date";
 
-import { type Dispatch, type SetStateAction } from "react";
-import { type NotesData } from "@/types/note";
 import DayCellSheetContent from "./SheetContent";
 
 interface Props {
@@ -18,10 +16,9 @@ interface Props {
   currentDate: Date;
   onClick: (date: Date) => void;
   text: string | undefined;
-  setNotes: Dispatch<SetStateAction<NotesData>>;
 }
 
-const DayCell = ({ date, currentDate, onClick, text, setNotes }: Props) => {
+const DayCell = ({ date, currentDate, onClick, text }: Props) => {
   const localeDateString = date.toLocaleDateString(undefined, {
     dateStyle: "long",
   });
@@ -46,7 +43,6 @@ const DayCell = ({ date, currentDate, onClick, text, setNotes }: Props) => {
       <DayCellSheetContent
         currentDate={currentDate}
         text={text}
-        setNotes={setNotes}
         localeDateString={localeDateString}
       />
     </CalendarSheet>

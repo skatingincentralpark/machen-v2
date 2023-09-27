@@ -19,7 +19,7 @@ interface Props {
 }
 
 const DayCells = ({ currentDate, setCurrentDate }: Props) => {
-  const { notes, setNotes } = useNotes();
+  const { notes } = useNotes();
 
   interface Day {
     text: string | undefined;
@@ -70,7 +70,6 @@ const DayCells = ({ currentDate, setCurrentDate }: Props) => {
             date={cell.date}
             onClick={() => setCurrentDate(cell.date)}
             text={cell.text}
-            setNotes={setNotes}
           />
         ))}
       </Cells>
