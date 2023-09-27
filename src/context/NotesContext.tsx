@@ -1,6 +1,7 @@
 "use client";
 
 import { type NotesData } from "@/types/note";
+import { type LexicalEditor, type RootNode } from "lexical";
 import React, {
   type ReactNode,
   createContext,
@@ -13,13 +14,38 @@ interface INotesContext {
   notes: NotesData;
   setNotes: React.Dispatch<React.SetStateAction<NotesData>>;
   setDummyNotes: () => void;
+  saveNote: (
+    editor: LexicalEditor,
+    currentDate: Date,
+    $getRoot: () => RootNode
+  ) => void;
+  deleteNote: (currentDate: Date) => void;
 }
 
 const Context = createContext<INotesContext>({
   notes: {},
   setNotes: () => {},
   setDummyNotes: () => {},
+  saveNote: () => {},
+  deleteNote: () => {},
 });
+
+function deleteMonthIfEmpty(newNotes: NotesData, year: number, month: number) {
+  const monthIsEmpty = Object.keys(newNotes[year]?.[month] ?? {}).length === 0;
+
+  if (monthIsEmpty) {
+    delete newNotes[year]?.[month];
+    deleteYearIfEmpty(newNotes, year);
+  }
+}
+
+function deleteYearIfEmpty(newNotes: NotesData, year: number) {
+  const yearIsEmpty = Object.keys(newNotes[year] ?? {}).length === 0;
+
+  if (yearIsEmpty) {
+    delete newNotes[year];
+  }
+}
 
 const NotesController = ({ children }: { children: ReactNode }) => {
   const [notes, setNotes] = useState<NotesData>({});
@@ -65,7 +91,73 @@ const NotesController = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  const value = { notes, setNotes, setDummyNotes };
+  function isEditorEmpty(editor: LexicalEditor, $getRoot: () => RootNode) {
+    return editor.getEditorState().read(() => {
+      const root = $getRoot();
+      const rootFirstChild = root.getFirstChild();
+      if (!rootFirstChild) return true;
+
+      /* eslint-disable-next-line @typescript-eslint/no-unsafe-call */
+      const fcEmpty = rootFirstChild.isEmpty() as boolean;
+      const isEmpty = fcEmpty && root.getChildrenSize() === 1;
+      return isEmpty;
+    });
+  }
+
+  function saveNote(
+    editor: LexicalEditor,
+    currentDate: Date,
+    $getRoot: () => RootNode
+  ) {
+    setNotes((prevNotes) => {
+      const editorStateJson = JSON.stringify(editor.getEditorState());
+
+      const month = currentDate.getMonth();
+      const day = currentDate.getDate();
+      const year = currentDate.getFullYear();
+
+      const newNotes = {
+        ...prevNotes,
+      };
+
+      if (isEditorEmpty(editor, $getRoot)) {
+        delete newNotes[year]?.[month]?.[day];
+        deleteMonthIfEmpty(newNotes, year, month);
+      } else {
+        newNotes[year] = {
+          ...newNotes[year],
+          [month]: {
+            ...newNotes[year]?.[month],
+            [day]: { text: editorStateJson },
+          },
+        };
+      }
+
+      localStorage.setItem("machen-data", JSON.stringify(newNotes));
+
+      return newNotes;
+    });
+  }
+
+  function deleteNote(currentDate: Date) {
+    setNotes((prevNotes) => {
+      const month = currentDate.getMonth();
+      const day = currentDate.getDate();
+      const year = currentDate.getFullYear();
+
+      const newNotes = {
+        ...prevNotes,
+      };
+      delete newNotes[year]?.[month]?.[day];
+
+      deleteMonthIfEmpty(newNotes, year, month);
+
+      localStorage.setItem("machen-data", JSON.stringify(newNotes));
+      return newNotes;
+    });
+  }
+
+  const value = { notes, setNotes, setDummyNotes, saveNote, deleteNote };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
