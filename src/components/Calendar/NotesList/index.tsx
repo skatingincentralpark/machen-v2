@@ -104,6 +104,10 @@ const NotesListContent = () => {
 
         <ScrollArea viewport={{ border: "none" }}>
           <ScrollAreaInner>
+            {notesArray.length === 0 && (
+              <p>You haven&apos;t written any notes yet.</p>
+            )}
+
             {notesArray.map((note) => {
               const localeDateString = note.date.toLocaleDateString();
 
