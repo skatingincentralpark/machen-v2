@@ -1,12 +1,11 @@
 "use client";
+import { useDate } from "@/context/DateContext";
 import { media } from "@/lib/media-queries";
 import styled from "@emotion/styled";
 
-interface Props {
-  currentDate: Date;
-}
+const Notes = () => {
+  const { currentDate } = useDate();
 
-const Notes = ({ currentDate }: Props) => {
   return (
     <Wrapper>
       <div>

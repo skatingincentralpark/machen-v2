@@ -1,5 +1,4 @@
 "use client";
-import { type Dispatch, type SetStateAction } from "react";
 import styled from "@emotion/styled";
 import {
   eachDayOfInterval,
@@ -12,14 +11,11 @@ import {
 } from "date-fns";
 import DayCell from "@/components/Calendar/DayCell";
 import { useNotes } from "@/context/NotesContext";
+import { useDate } from "@/context/DateContext";
 
-interface Props {
-  currentDate: Date;
-  setCurrentDate: Dispatch<SetStateAction<Date>>;
-}
-
-const DayCells = ({ currentDate, setCurrentDate }: Props) => {
+const DayCells = () => {
   const { notes } = useNotes();
+  const { currentDate } = useDate();
 
   interface Day {
     text: string | undefined;
@@ -68,7 +64,6 @@ const DayCells = ({ currentDate, setCurrentDate }: Props) => {
             key={`${cell.date.getMonth()}/${index}`}
             currentDate={currentDate}
             date={cell.date}
-            onClick={() => setCurrentDate(cell.date)}
             text={cell.text}
           />
         ))}

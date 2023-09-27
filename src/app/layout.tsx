@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import "@/styles/global.css";
 // import { Inter } from "next/font/google";
 import { NotesController } from "@/context/NotesContext";
+import { DateController } from "@/context/DateContext";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -15,10 +16,12 @@ export default function RootLayout({
       <body
       // className={inter.className}
       >
-        <NotesController>
-          <Header />
-          {children}
-        </NotesController>
+        <DateController>
+          <NotesController>
+            <Header />
+            {children}
+          </NotesController>
+        </DateController>
       </body>
     </html>
   );

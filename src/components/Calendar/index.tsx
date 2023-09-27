@@ -1,6 +1,5 @@
 "use client";
 import styled from "@emotion/styled";
-import { useState } from "react";
 
 import Months from "@/components/Calendar/Months";
 import Weekdays from "@/components/Calendar/Weekdays";
@@ -11,14 +10,12 @@ import NotesList from "@/components/Calendar/NotesList";
 import { media } from "@/lib/media-queries";
 
 const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-
   return (
     <CalendarWrapper aria-label="Calendar">
-      <Months currentDate={currentDate} setCurrentDate={setCurrentDate} />
+      <Months />
       <Weekdays />
-      <DayCells currentDate={currentDate} setCurrentDate={setCurrentDate} />
-      <Notes currentDate={currentDate} />
+      <DayCells />
+      <Notes />
       <NotesList />
     </CalendarWrapper>
   );

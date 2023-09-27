@@ -1,8 +1,8 @@
 "use client";
 import styled from "@emotion/styled";
-import { type Dispatch, type SetStateAction } from "react";
 import { setMonth } from "date-fns";
 import YearSelector from "@/components/Calendar/YearSelector";
+import { useDate } from "@/context/DateContext";
 
 const months = [
   "January",
@@ -19,12 +19,9 @@ const months = [
   "December",
 ];
 
-interface Props {
-  currentDate: Date;
-  setCurrentDate: Dispatch<SetStateAction<Date>>;
-}
+const Months = () => {
+  const { currentDate, setCurrentDate } = useDate();
 
-const Months = ({ currentDate, setCurrentDate }: Props) => {
   return (
     <MonthLabels aria-label="Select a month">
       {months.map((month, index) => (
@@ -37,7 +34,7 @@ const Months = ({ currentDate, setCurrentDate }: Props) => {
           {month[0]}
         </MonthLabel>
       ))}
-      <YearSelector currentDate={currentDate} setCurrentDate={setCurrentDate} />
+      <YearSelector />
     </MonthLabels>
   );
 };

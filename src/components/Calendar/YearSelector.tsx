@@ -10,16 +10,12 @@ import {
   CalendarSheetTitle,
   CalendarSheetTrigger,
 } from "@/components/UI/CalendarSheet";
-import { type Dispatch, type SetStateAction } from "react";
 import { setYear } from "date-fns";
 import { Button } from "../UI/Button";
+import { useDate } from "@/context/DateContext";
 
-interface Props {
-  currentDate: Date;
-  setCurrentDate: Dispatch<SetStateAction<Date>>;
-}
-
-const YearSelector = ({ currentDate, setCurrentDate }: Props) => {
+const YearSelector = () => {
+  const { currentDate, setCurrentDate } = useDate();
   const years = [2017, 2018, 2019, 2021, 2022, 2023, 2024];
   const currentYear = currentDate.getFullYear();
 

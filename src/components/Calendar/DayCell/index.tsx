@@ -10,15 +10,16 @@ import { media } from "@/lib/media-queries";
 import { weekdays } from "@/lib/date";
 
 import DayCellCalendarSheetContent from "./SheetContent";
+import { useDate } from "@/context/DateContext";
 
 interface Props {
   date: Date;
   currentDate: Date;
-  onClick: (date: Date) => void;
   text: string | undefined;
 }
 
-const DayCell = ({ date, currentDate, onClick, text }: Props) => {
+const DayCell = ({ date, currentDate, text }: Props) => {
+  const { setCurrentDate } = useDate();
   const localeDateString = date.toLocaleDateString(undefined, {
     dateStyle: "long",
   });
@@ -29,7 +30,7 @@ const DayCell = ({ date, currentDate, onClick, text }: Props) => {
     <CalendarSheet>
       <CalendarSheetTrigger asChild>
         <Cell
-          onClick={() => onClick(date)}
+          onClick={() => setCurrentDate(date)}
           isSelected={
             date.toLocaleDateString() === currentDate.toLocaleDateString()
           }
