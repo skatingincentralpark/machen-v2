@@ -9,7 +9,7 @@ import {
 import { media } from "@/lib/media-queries";
 import { weekdays } from "@/lib/date";
 
-import DayCellSheetContent from "./SheetContent";
+import DayCellCalendarSheetContent from "./SheetContent";
 
 interface Props {
   date: Date;
@@ -40,7 +40,7 @@ const DayCell = ({ date, currentDate, onClick, text }: Props) => {
         </Cell>
       </CalendarSheetTrigger>
 
-      <DayCellSheetContent
+      <DayCellCalendarSheetContent
         currentDate={currentDate}
         text={text}
         localeDateString={localeDateString}
