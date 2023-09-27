@@ -82,7 +82,9 @@ const NotesListContent = () => {
       for (const month in data[Number(year)]) {
         for (const day in data[Number(year)]?.[Number(month)]) {
           const note = data[Number(year)]?.[Number(month)]?.[Number(day)];
-          const date = new Date(`${year}-${month}-${day}`);
+          // Need to add 1 to month because Date() expects 0-11, but getMonth() returns 0-12 LOL
+          const monthNonZeroIndexed = Number(month) + 1;
+          const date = new Date(`${year}-${monthNonZeroIndexed}-${day}`);
 
           if (!note) continue;
           notesArray.push({ date, text: note.text });
@@ -102,28 +104,25 @@ const NotesListContent = () => {
           All Your Notes
         </CalendarSheetTitle>
 
+        <CalendarSheetClose asChild>
+          <Button>Close</Button>
+        </CalendarSheetClose>
+
         <ScrollArea viewport={{ border: "none" }}>
           <ScrollAreaInner>
             {notesArray.length === 0 && (
               <p>You haven&apos;t written any notes yet.</p>
             )}
 
-            {notesArray.map((note) => {
-              const localeDateString = note.date.toLocaleDateString();
-
-              return (
-                <div key={localeDateString}>
-                  <DateText>{localeDateString}</DateText>
-                  <NoteViewer editorStateString={note.text} />
-                </div>
-              );
-            })}
+            {notesArray.map((note) => (
+              <NoteViewer
+                editorStateString={note.text}
+                key={note.date.toLocaleDateString()}
+                date={note.date}
+              />
+            ))}
           </ScrollAreaInner>
         </ScrollArea>
-
-        <CalendarSheetClose asChild>
-          <Button>Close</Button>
-        </CalendarSheetClose>
       </Inner>
 
       <CalendarSheetClose asChild>
@@ -144,7 +143,4 @@ const ScrollAreaInner = styled.div`
   ${media.sm} {
     padding-right: 1rem;
   }
-`;
-const DateText = styled.h3`
-  font-size: 1.2rem;
 `;

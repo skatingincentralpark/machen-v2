@@ -30,6 +30,7 @@ export const CalendarSheetContentInner = styled.div<SheetProps>`
   outline: 1px solid black;
   outline-offset: -0.5px;
   z-index: 1;
+  position: relative;
 
   display: flex;
   flex-direction: column;
