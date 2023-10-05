@@ -139,6 +139,7 @@ const InfoText = styled.div`
   border-radius: 0.5rem;
   color: white;
   width: 15rem;
+  pointer-events: none;
 
   animation: fadeOut 5s forwards;
   @keyframes fadeOut {

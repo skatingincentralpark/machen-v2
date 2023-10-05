@@ -78,7 +78,10 @@ const NotesController = ({ children }: { children: ReactNode }) => {
       "This will overwrite any saved data with dummy data, are you sure?"
     );
 
-    const dummyNotes = await fetch("http://localhost:3000/api/notes");
+    const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+      : "http://localhost:3000";
+    const dummyNotes = await fetch(`${baseUrl}/api/notes`);
     const dummyNotesData: unknown = await dummyNotes.json();
 
     if (!assertIsNotes(dummyNotesData)) {
