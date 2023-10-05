@@ -11,6 +11,7 @@ import { weekdays } from "@/lib/date";
 
 import DayCellCalendarSheetContent from "./SheetContent";
 import { useDate } from "@/context/DateContext";
+import { useState } from "react";
 
 interface Props {
   date: Date;
@@ -19,46 +20,68 @@ interface Props {
 }
 
 const DayCell = ({ date, currentDate, text }: Props) => {
+  const [isOpen, setIsOpen] = useState(false);
   const { setCurrentDate } = useDate();
   const localeDateString = date.toLocaleDateString(undefined, {
     dateStyle: "long",
   });
 
   const weekday = weekdays[date.getDay()];
+  const notCurrentMonth = date.getMonth() !== currentDate.getMonth();
+  const getVariant = () => {
+    if (notCurrentMonth) return "muted";
+    if (text) return "highlight";
+    return "default";
+  };
 
   return (
-    <CalendarSheet>
+    <CalendarSheet
+      open={isOpen}
+      onOpenChange={() => !notCurrentMonth && setIsOpen((prev) => !prev)}
+    >
       <CalendarSheetTrigger asChild>
         <Cell
-          onClick={() => setCurrentDate(date)}
+          onClick={() => {
+            setCurrentDate(date);
+          }}
           isSelected={
             date.toLocaleDateString() === currentDate.toLocaleDateString()
           }
-          hasNote={!!text}
+          variant={getVariant()}
           aria-label={`Select ${weekday}, ${localeDateString}`}
         >
           {date.getDate()}
         </Cell>
       </CalendarSheetTrigger>
-
-      <DayCellCalendarSheetContent
-        currentDate={currentDate}
-        text={text}
-        localeDateString={localeDateString}
-      />
+      {isOpen && (
+        <DayCellCalendarSheetContent
+          currentDate={currentDate}
+          text={text}
+          localeDateString={localeDateString}
+        />
+      )}
     </CalendarSheet>
   );
 };
 
 export default DayCell;
 
-const Cell = styled.button<{ isSelected: boolean; hasNote: boolean }>`
+const variants = {
+  default: "#fff",
+  highlight: "var(--highlight)",
+  muted: "#d3d3d3",
+};
+
+const Cell = styled.button<{
+  isSelected: boolean;
+  variant: keyof typeof variants;
+}>`
   outline: 1px solid black;
   outline-offset: -0.5px;
   aspect-ratio: initial;
   width: 100%;
   color: ${({ isSelected }) => (isSelected ? "red" : "#000")};
-  background-color: ${({ hasNote }) => (hasNote ? "var(--highlight)" : "#fff")};
+  background-color: ${({ variant }) => variants[variant]};
   display: flex;
   padding: 0.5rem;
   transition: var(--cell-transition);
