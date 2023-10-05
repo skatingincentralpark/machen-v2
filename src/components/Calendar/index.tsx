@@ -29,7 +29,6 @@ const CalendarWrapper = styled.div`
   grid-template-columns: 2rem auto;
   grid-template-rows: 2rem auto 2rem;
   box-sizing: border-box;
-  font-size: 14px;
   max-width: 900px;
   height: 80vh;
 
