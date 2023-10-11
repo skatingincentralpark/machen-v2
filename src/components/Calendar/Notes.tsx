@@ -26,6 +26,8 @@ const Wrapper = styled.div`
   padding: 0.2rem;
   display: none;
 
+  border-radius: 0 0 var(--border-radius) 0;
+
   ${media.md} {
     display: block;
   }

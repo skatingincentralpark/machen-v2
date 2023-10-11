@@ -34,6 +34,13 @@ const DayLabels = styled.div`
   grid-column: 2 / 9;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+
+  overflow: hidden;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+
+  ${media.md} {
+    border-radius: var(--border-radius) 0 0 0;
+  }
 `;
 const DayLabel = styled.div`
   display: flex;

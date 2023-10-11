@@ -48,6 +48,9 @@ const MonthLabels = styled.div`
   display: grid;
   grid-template-rows: repeat(18, 1fr);
   font-weight: bold;
+
+  overflow: hidden;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
 `;
 const MonthLabel = styled.button<{ highlighted: boolean }>`
   display: flex;

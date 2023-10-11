@@ -57,7 +57,7 @@ const Inner = styled.div`
   background-color: #fff;
   padding: 1rem;
   margin: 0;
-  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
 
   display: flex;
   flex-direction: column;

@@ -57,8 +57,11 @@ const Trigger = styled.button`
   align-items: center;
   grid-column: 2 / 9;
 
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+
   ${media.md} {
     grid-column: auto;
+    border-radius: 0 var(--border-radius) 0 0;
   }
 `;
 
