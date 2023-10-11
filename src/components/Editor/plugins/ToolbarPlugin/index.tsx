@@ -25,6 +25,18 @@ import BlockOptionsDropdownList from "./BlockOptionsDropdownList";
 import { Button } from "@/components/UI/Button";
 import { getSelectedNode } from "../../utilts/getSelectedNode";
 
+import {
+  AlignCenter,
+  AlignJustify,
+  AlignLeft,
+  AlignRight,
+  Bold,
+  Code,
+  Italic,
+  Strikethrough,
+  Underline,
+} from "lucide-react";
+
 const LowPriority = 1;
 
 const supportedBlockTypes = new Set([
@@ -144,88 +156,104 @@ const ToolbarButtons = () => {
         <BlockOptionsDropdownList editor={editor} blockType={blockType} />
       )}
       <>
-        <Button
+        <ToolbarButton
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
           }}
           aria-label="Format Bold"
           variant={isBold ? "active" : "primary"}
         >
-          <span>Bold</span>
-        </Button>
-        <Button
+          <Bold size={15} strokeWidth={isBold ? 3 : 2} />
+        </ToolbarButton>
+        <ToolbarButton
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
           }}
           aria-label="Format Italics"
           variant={isItalic ? "active" : "primary"}
         >
-          <span>Italic</span>
-        </Button>
-        <Button
+          <Italic size={15} strokeWidth={isItalic ? 3 : 2} />
+        </ToolbarButton>
+        <ToolbarButton
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
           }}
           aria-label="Format Underline"
           variant={isUnderline ? "active" : "primary"}
         >
-          <span>Underline</span>
-        </Button>
-        <Button
+          <Underline size={15} strokeWidth={isUnderline ? 3 : 2} />
+        </ToolbarButton>
+        <ToolbarButton
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
           }}
           aria-label="Format Strikethrough"
           variant={isStrikethrough ? "active" : "primary"}
         >
-          <span>Strikethrough</span>
-        </Button>
-        <Button
+          <Strikethrough size={15} strokeWidth={isStrikethrough ? 3 : 2} />
+        </ToolbarButton>
+        <ToolbarButton
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
           }}
           aria-label="Insert Code"
           variant={isCode ? "active" : "primary"}
         >
-          <span>Code</span>
-        </Button>
-        <Button
+          <Code size={15} strokeWidth={isCode ? 3 : 2} />
+        </ToolbarButton>
+        <ToolbarButton
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
           }}
           aria-label="Left Align"
           variant={elementFormat === "left" ? "active" : "primary"}
         >
-          <span>Left Align</span>
-        </Button>
-        <Button
+          <AlignLeft size={15} strokeWidth={elementFormat === "left" ? 3 : 2} />
+        </ToolbarButton>
+        <ToolbarButton
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
           }}
           aria-label="Center Align"
           variant={elementFormat === "center" ? "active" : "primary"}
         >
-          <span>Center Align</span>
-        </Button>
-        <Button
+          <AlignCenter
+            size={15}
+            strokeWidth={elementFormat === "center" ? 3 : 2}
+          />
+        </ToolbarButton>
+        <ToolbarButton
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
           }}
           aria-label="Right Align"
           variant={elementFormat === "right" ? "active" : "primary"}
         >
-          <span>Right Align</span>
-        </Button>
-        <Button
+          <AlignRight
+            size={15}
+            strokeWidth={elementFormat === "right" ? 3 : 2}
+          />
+        </ToolbarButton>
+        <ToolbarButton
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
           }}
           aria-label="Justify Align"
           variant={elementFormat === "justify" ? "active" : "primary"}
         >
-          <span>Justify Align</span>
-        </Button>{" "}
+          <AlignJustify
+            size={15}
+            strokeWidth={elementFormat === "justify" ? 3 : 2}
+          />
+        </ToolbarButton>{" "}
       </>
     </>
   );
 };
+
+export const ToolbarButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+`;

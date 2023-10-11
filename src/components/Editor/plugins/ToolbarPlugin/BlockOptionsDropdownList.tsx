@@ -16,19 +16,15 @@ import {
 } from "@lexical/list";
 import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
 import { Button } from "@/components/UI/Button";
-
-const blockTypeToBlockName: Record<string, string> = {
-  code: "Code Block",
-  h1: "Large Heading",
-  h2: "Small Heading",
-  h3: "Heading",
-  h4: "Heading",
-  h5: "Heading",
-  ol: "Numbered List",
-  paragraph: "Normal",
-  quote: "Quote",
-  ul: "Bulleted List",
-};
+import {
+  Heading1,
+  Heading2,
+  List,
+  ListOrdered,
+  LucideTextQuote,
+  Text,
+} from "lucide-react";
+import { ToolbarButton } from "./index";
 
 interface Props {
   editor: LexicalEditor;
@@ -114,12 +110,53 @@ function BlockOptionsDropdownList({ editor, blockType }: Props) {
     editor.focus();
   };
 
+  const blockTypeMap = [
+    {
+      name: "Normal",
+      icon: <Text size={15} />,
+      type: "paragraph",
+      onClick: formatParagraph,
+    },
+    {
+      name: "Large Heading",
+      icon: <Heading1 size={15} />,
+      type: "h1",
+      onClick: formatLargeHeading,
+    },
+    {
+      name: "Small Heading",
+      icon: <Heading2 size={15} />,
+      type: "h2",
+      onClick: formatSmallHeading,
+    },
+    {
+      name: "Bulleted List",
+      icon: <List size={15} />,
+      type: "ul",
+      onClick: formatBulletList,
+    },
+    {
+      name: "Numbered List",
+      icon: <ListOrdered size={15} />,
+      type: "ol",
+      onClick: formatNumberedList,
+    },
+    {
+      name: "Quote",
+      icon: <LucideTextQuote size={15} />,
+      type: "quote",
+      onClick: formatQuote,
+    },
+  ];
+
+  const selected = blockTypeMap.find((block) => block.type === blockType);
+
   return (
     <DropdownMenu.Root open={open} onOpenChange={setOpen}>
       <DropdownMenu.Trigger asChild>
-        <Button aria-label="Formatting Options">
-          <span className="text">{blockTypeToBlockName[blockType]}</span>
-        </Button>
+        <ToolbarButton aria-label="Formatting Options">
+          {selected?.icon} {selected?.name}
+        </ToolbarButton>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
@@ -128,48 +165,18 @@ function BlockOptionsDropdownList({ editor, blockType }: Props) {
           sideOffset={0}
           align="start"
         >
-          <DropdownMenu.Item asChild>
-            <Button className="item" onClick={formatParagraph}>
-              <span className="icon paragraph" />
-              <span className="text">Normal</span>
-              {blockType === "paragraph" && <span className="active" />}
-            </Button>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item asChild>
-            <Button className="item" onClick={formatLargeHeading}>
-              <span className="icon large-heading" />
-              <span className="text">Large Heading</span>
-              {blockType === "h1" && <span className="active" />}
-            </Button>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item asChild>
-            <Button className="item" onClick={formatSmallHeading}>
-              <span className="icon small-heading" />
-              <span className="text">Small Heading</span>
-              {blockType === "h2" && <span className="active" />}
-            </Button>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item asChild>
-            <Button className="item" onClick={formatBulletList}>
-              <span className="icon bullet-list" />
-              <span className="text">Bullet List</span>
-              {blockType === "ul" && <span className="active" />}
-            </Button>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item asChild>
-            <Button className="item" onClick={formatNumberedList}>
-              <span className="icon numbered-list" />
-              <span className="text">Numbered List</span>
-              {blockType === "ol" && <span className="active" />}
-            </Button>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item asChild>
-            <Button className="item" onClick={formatQuote}>
-              <span className="icon quote" />
-              <span className="text">Quote</span>
-              {blockType === "quote" && <span className="active" />}
-            </Button>
-          </DropdownMenu.Item>
+          {blockTypeMap.map((block) => {
+            return (
+              <DropdownMenu.Item asChild key={block.type}>
+                <DropdownButton
+                  onClick={block.onClick}
+                  variant={blockType === block.type ? "active" : "primary"}
+                >
+                  {block.icon} {block.name}
+                </DropdownButton>
+              </DropdownMenu.Item>
+            );
+          })}
         </DropdownMenuContent>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
@@ -188,4 +195,13 @@ const DropdownMenuContent = styled(DropdownMenu.Content)`
   gap: 0.5rem;
   padding: 0.5rem;
   border: 1px solid #ccc;
+`;
+
+const DropdownButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 2rem;
+  justify-content: start;
 `;
