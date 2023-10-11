@@ -17,7 +17,8 @@ const Header = () => {
     <>
       <HeaderMain>
         <Logo>
-          <div>Machen</div> <TimeWrapper>{localeDateTime}</TimeWrapper>
+          <div>Machen</div>
+          {/* <TimeWrapper>{localeDateTime}</TimeWrapper> */}
         </Logo>
         <HeaderMenu />
       </HeaderMain>
