@@ -1,17 +1,17 @@
 "use client";
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import HeaderMenu from "@/components/HeaderMenu";
-import { media } from "@/lib/media-queries";
+// import { media } from "@/lib/media-queries";
 
 const Header = () => {
-  const [localeDateTime, setLocaleDateTime] = useState<string>("");
+  // const [localeDateTime, setLocaleDateTime] = useState<string>("");
 
-  useEffect(() => {
-    const date = new Date();
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    setLocaleDateTime(`${date.toLocaleString()}, ${timezone}`);
-  }, []);
+  // useEffect(() => {
+  //   const date = new Date();
+  //   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  //   setLocaleDateTime(`${date.toLocaleString()}, ${timezone}`);
+  // }, []);
 
   return (
     <>
@@ -49,27 +49,27 @@ const Logo = styled.div`
   padding: 2rem 0 2rem 2rem;
 `;
 
-const TimeWrapper = styled.div`
-  font-weight: 400;
-  color: #a0a0a0;
+// const TimeWrapper = styled.div`
+//   font-weight: 400;
+//   color: #a0a0a0;
 
-  animation: fadeIn 2s ease-in-out;
+//   animation: fadeIn 2s ease-in-out;
 
-  max-width: 9rem;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+//   max-width: 9rem;
+//   overflow: hidden;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
 
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
+//   @keyframes fadeIn {
+//     0% {
+//       opacity: 0;
+//     }
+//     100% {
+//       opacity: 1;
+//     }
+//   }
 
-  ${media.sm} {
-    max-width: 100%;
-  }
-`;
+//   ${media.sm} {
+//     max-width: 100%;
+//   }
+// `;
