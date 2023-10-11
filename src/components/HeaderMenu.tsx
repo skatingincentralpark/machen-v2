@@ -115,6 +115,7 @@ const HeaderMenuContent = styled(PopoverContent)`
   left: 0;
   background-color: #f2f2f2;
   padding: 2rem;
+  padding-top: 5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
