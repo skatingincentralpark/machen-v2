@@ -11,7 +11,7 @@ import { weekdays } from "@/lib/date";
 
 import DayCellCalendarSheetContent from "./SheetContent";
 import { useDate } from "@/context/DateContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   date: Date;
@@ -21,10 +21,12 @@ interface Props {
 
 const DayCell = ({ date, currentDate, text }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isRendered, setIsRendered] = useState(false);
   const { setCurrentDate } = useDate();
   const localeDateString = date.toLocaleDateString(undefined, {
     dateStyle: "long",
   });
+  const prerenderedDateString = date.toUTCString();
 
   const weekday = weekdays[date.getDay()];
   const notCurrentMonth = date.getMonth() !== currentDate.getMonth();
@@ -33,6 +35,10 @@ const DayCell = ({ date, currentDate, text }: Props) => {
     if (text) return "highlight";
     return "default";
   };
+
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
 
   return (
     <CalendarSheet
@@ -48,7 +54,11 @@ const DayCell = ({ date, currentDate, text }: Props) => {
             date.toLocaleDateString() === currentDate.toLocaleDateString()
           }
           variant={getVariant()}
-          aria-label={`Select ${weekday}, ${localeDateString}`}
+          aria-label={
+            isRendered
+              ? `Select ${weekday}, ${localeDateString}`
+              : `Select ${prerenderedDateString}`
+          }
         >
           {date.getDate()}
         </Cell>
