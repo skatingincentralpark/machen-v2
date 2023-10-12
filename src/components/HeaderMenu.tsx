@@ -17,9 +17,11 @@ const HeaderMenu = () => {
   return (
     <PopoverRoot>
       <PopoverTrigger asChild>
-        <HeaderMenuButton>
+        <HeaderMenuButton data-testid="header-menu-button" role="">
           <Circle />
-          <InfoText>Click the circle for some information!</InfoText>
+          <InfoText role="contentinfo">
+            Click the circle for some information!
+          </InfoText>
         </HeaderMenuButton>
       </PopoverTrigger>
       <Anchor />
@@ -57,6 +59,7 @@ const HeaderMenu = () => {
               <HeaderButton
                 onClick={setDummyNotes}
                 aria-label="Clear local storage and set some dummy notes"
+                data-testid="set-dummy-notes"
               >
                 Set Dummy Notes
               </HeaderButton>
@@ -78,11 +81,6 @@ const HeaderMenuButton = styled.button`
   padding: 1.5rem 2rem;
   background-color: transparent;
   position: relative;
-
-  &:active > * {
-    transform: scale(0.5);
-    background: white;
-  }
 `;
 const Anchor = styled(PopoverAnchor)`
   position: fixed;
