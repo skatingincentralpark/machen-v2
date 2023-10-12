@@ -1,24 +1,13 @@
 "use client";
 import styled from "@emotion/styled";
-// import { useEffect, useState } from "react";
 import HeaderMenu from "@/components/HeaderMenu";
-// import { media } from "@/lib/media-queries";
 
 const Header = () => {
-  // const [localeDateTime, setLocaleDateTime] = useState<string>("");
-
-  // useEffect(() => {
-  //   const date = new Date();
-  //   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  //   setLocaleDateTime(`${date.toLocaleString()}, ${timezone}`);
-  // }, []);
-
   return (
     <>
       <HeaderMain>
         <Logo>
-          <div>Machen</div>
-          {/* <TimeWrapper>{localeDateTime}</TimeWrapper> */}
+          <h1>Machen</h1>
         </Logo>
         <HeaderMenu />
       </HeaderMain>
