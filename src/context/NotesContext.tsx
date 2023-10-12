@@ -1,5 +1,6 @@
 "use client";
 
+import { assertIsNotes } from "@/lib/data";
 import { type NotesData } from "@/types/note";
 import { type LexicalEditor, type RootNode } from "lexical";
 import React, {
@@ -50,21 +51,17 @@ function deleteYearIfEmpty(newNotes: NotesData, year: number) {
 const NotesController = ({ children }: { children: ReactNode }) => {
   const [notes, setNotes] = useState<NotesData>({});
 
-  const assertIsNotes = (value: unknown): value is NotesData => {
-    if (typeof value !== "object" || value === null) return false;
-    return true;
-  };
-
   useEffect(() => {
     function getDataFromStorage() {
-      // getting stored value
       const machenData = localStorage.getItem("machen-data");
       if (machenData === null) return {};
 
       const initialValue: unknown = JSON.parse(machenData);
 
       if (!assertIsNotes(initialValue)) {
-        throw new Error("Something went wrong retreiving notes data.");
+        console.error("Something went wrong retreiving notes data.");
+        localStorage.removeItem("machen-data");
+        return {};
       }
 
       return initialValue;
@@ -74,10 +71,6 @@ const NotesController = ({ children }: { children: ReactNode }) => {
   }, [setNotes]);
 
   async function setDummyNotes() {
-    const confirmation = confirm(
-      "This will overwrite any saved data with dummy data, are you sure?"
-    );
-
     const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
       ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
       : "http://localhost:3000";
@@ -88,10 +81,8 @@ const NotesController = ({ children }: { children: ReactNode }) => {
       throw new Error("The dummy notes data is not valid.");
     }
 
-    if (!!confirmation) {
-      setNotes(dummyNotesData);
-      localStorage.setItem("machen-data", JSON.stringify(dummyNotesData));
-    }
+    setNotes(dummyNotesData);
+    localStorage.setItem("machen-data", JSON.stringify(dummyNotesData));
   }
 
   function isEditorEmpty(editor: LexicalEditor, $getRoot: () => RootNode) {

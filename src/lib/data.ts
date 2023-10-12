@@ -1,3 +1,5 @@
+// ⚠️ To-do: remvoe eslint disable comments
+
 import { type NotesData } from "@/types/note";
 
 const NOTE_TEXT = `{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Hey there","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}`;
@@ -40,4 +42,58 @@ export const NOTES_DATA: NotesData = {
       },
     },
   },
+};
+
+/** Will also return true if empty object */
+export const assertIsNotes = (value: unknown): value is NotesData => {
+  if (typeof value !== "object" || value === null) return false;
+
+  function isNumeric(str: string) {
+    if (typeof str !== "string") return false;
+    return !isNaN(+str) && !isNaN(parseFloat(str));
+  }
+
+  if (
+    !Object.entries(value).every(([year, yearValue]) => {
+      if (
+        !isNumeric(year) ||
+        typeof yearValue !== "object" ||
+        yearValue === null
+      ) {
+        return false;
+      }
+
+      /* eslint-disable */
+      return Object.entries(yearValue).every(([month, monthValue]) => {
+        if (
+          !isNumeric(month) ||
+          typeof monthValue !== "object" ||
+          monthValue === null
+        ) {
+          return false;
+        }
+
+        return Object.entries(monthValue).every(([day, dayValue]) => {
+          if (
+            !isNumeric(day) ||
+            typeof dayValue !== "object" ||
+            dayValue === null
+          ) {
+            return false;
+          }
+
+          /* eslint-disable */
+          if (typeof dayValue.text !== "string") {
+            return false;
+          }
+
+          return true;
+        });
+      });
+    })
+  ) {
+    return false;
+  }
+
+  return true;
 };

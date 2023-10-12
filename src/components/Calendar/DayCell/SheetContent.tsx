@@ -19,7 +19,7 @@ const NoteEditor = dynamic(() => import("./NoteEditor"), {
   loading: () => <Loading />,
 });
 
-const Loading = () => <div>Loading...</div>;
+const Loading = () => <div role="progressbar">Loading...</div>;
 
 interface Props extends NoteEditorProps {
   localeDateString: string;

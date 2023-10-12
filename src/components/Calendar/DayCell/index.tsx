@@ -47,6 +47,7 @@ const DayCell = ({ date, currentDate, text }: Props) => {
     >
       <CalendarSheetTrigger asChild>
         <Cell
+          data-testid="day-cell"
           onClick={() => {
             setCurrentDate(date);
           }}
