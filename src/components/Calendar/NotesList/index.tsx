@@ -86,8 +86,7 @@ const NotesListContent = () => {
         for (const day in data[Number(year)]?.[Number(month)]) {
           const note = data[Number(year)]?.[Number(month)]?.[Number(day)];
           // Need to add 1 to month because Date() expects 0-11, but getMonth() returns 0-12 LOL
-          const monthNonZeroIndexed = Number(month) + 1;
-          const date = new Date(`${year}-${monthNonZeroIndexed}-${day}`);
+          const date = new Date(+year, +month, +day);
 
           if (!note) continue;
           notesArray.push({ date, text: note.text });
