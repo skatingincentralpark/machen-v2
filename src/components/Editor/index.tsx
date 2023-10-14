@@ -57,7 +57,9 @@ function EditorComponents({ editorStateString, readOnly = false }: Props) {
           {!readOnly && <AutoFocusPlugin />}
           <RichTextPlugin
             contentEditable={<SContentEditable className="editor-input" />}
-            placeholder={<Placeholder>Enter some text...</Placeholder>}
+            placeholder={(isEditable) =>
+              !isEditable ? <Placeholder>Enter some text...</Placeholder> : null
+            }
             ErrorBoundary={LexicalErrorBoundary}
           />
           <ListPlugin />
