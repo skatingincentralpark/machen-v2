@@ -47,6 +47,8 @@ const DayCell = ({ date, currentDate, text }: Props) => {
     >
       <CalendarSheetTrigger asChild>
         <Cell
+          role="gridcell"
+          name="day-cell"
           data-testid="day-cell"
           onClick={() => {
             setCurrentDate(date);
@@ -60,6 +62,8 @@ const DayCell = ({ date, currentDate, text }: Props) => {
               ? `Select ${weekday}, ${localeDateString}`
               : `Select ${prerenderedDateString}`
           }
+          className={text !== undefined ? "has-note" : ""}
+          title={text !== undefined ? "has-note" : ""}
         >
           {date.getDate()}
         </Cell>

@@ -27,6 +27,7 @@ const NoteEditor = (props: NoteEditorProps) => {
 const WrappedComponents = ({ currentDate, text }: NoteEditorProps) => {
   const [editor] = useLexicalComposerContext();
   const { saveNote, deleteNote } = useNotes();
+  const hasExistingNote = text !== undefined;
 
   return (
     <>
@@ -38,14 +39,19 @@ const WrappedComponents = ({ currentDate, text }: NoteEditorProps) => {
         </CalendarSheetClose>
         <CalendarSheetClose asChild>
           <Button onClick={() => saveNote(editor, currentDate, $getRoot)}>
-            Save
+            {hasExistingNote ? "Save" : "Create"} Note
           </Button>
         </CalendarSheetClose>
-        <CalendarSheetClose asChild>
-          <Button onClick={() => deleteNote(currentDate)} variant="destructive">
-            Delete Note
-          </Button>
-        </CalendarSheetClose>
+        {hasExistingNote && (
+          <CalendarSheetClose asChild>
+            <Button
+              onClick={() => deleteNote(currentDate)}
+              variant="destructive"
+            >
+              Delete Note
+            </Button>
+          </CalendarSheetClose>
+        )}
       </ButtonWrapper>
     </>
   );

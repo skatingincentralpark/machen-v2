@@ -22,7 +22,7 @@ const YearSelector = () => {
   return (
     <CalendarSheet>
       <CalendarSheetTrigger asChild>
-        <YearTrigger>
+        <YearTrigger title="Select a year">
           <div>{currentYear}</div>
         </YearTrigger>
       </CalendarSheetTrigger>
@@ -47,6 +47,7 @@ const YearSelector = () => {
                   variant={currentYear === y ? "active" : "primary"}
                   onClick={() => setCurrentDate(setYear(currentDate, y))}
                   aria-label={`Select ${y}`}
+                  className={currentYear === y ? "active" : ""}
                 >
                   {y}
                 </Button>

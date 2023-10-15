@@ -134,10 +134,6 @@ const NotesController = ({ children }: { children: ReactNode }) => {
   }
 
   function deleteNote(date: Date) {
-    const confirmation = confirm("Are you sure you want to delete this note?");
-
-    if (!confirmation) return;
-
     setNotes((prevNotes) => {
       const month = date.getMonth();
       const day = date.getDate();

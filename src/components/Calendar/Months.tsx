@@ -29,7 +29,9 @@ const Months = () => {
           key={index}
           highlighted={currentDate.getMonth() === index}
           onClick={() => setCurrentDate(setMonth(currentDate, index))}
+          title="Select a month"
           aria-label={`Select ${month}`}
+          className={currentDate.getMonth() === index ? "active" : ""}
         >
           {month[0]}
         </MonthLabel>
