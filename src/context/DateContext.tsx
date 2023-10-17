@@ -24,9 +24,7 @@ const Context = createContext<INotesContext>({
 
 const DateController = ({ children }: { children: ReactNode }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [currentlocaleDateString, setCurrentlocaleDateString] = useState(
-    "One moment please 😉..."
-  );
+  const [currentlocaleDateString, setCurrentlocaleDateString] = useState("");
 
   // Put in useEffect due to toLocaleDateString returning different values depending on region
   useEffect(() => {

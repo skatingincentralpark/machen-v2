@@ -114,6 +114,7 @@ describe("MachenV2", () => {
     const createButton = screen.getByRole("button", {
       name: /create note/i,
     });
+    expect(createButton).toBeInTheDocument();
   });
 
   test("Able to change month and year", async () => {
