@@ -4,46 +4,49 @@ import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
 import { AlignLeft, Plus, Cookie, Sun } from "lucide-react";
 
-export default function Header() {
+export default function Header({ children }: { children?: React.ReactNode }) {
   const date = new Date("2014-01-01");
   const month = date.toLocaleString("default", { month: "long" });
   const year = date.getFullYear();
 
   return (
     <StyledHeader>
-      <Left justify="flex-start">
-        <IconButton aria-label="Open Sidebar">
-          <AlignLeft />
-        </IconButton>
-        <DateHeading
-          aria-label="Currently selected month and year"
-          title="Currently selected month and year"
-        >
-          {month} <span>{year}</span>
-        </DateHeading>
-      </Left>
+      <div>
+        <Left justify="flex-start">
+          <IconButton aria-label="Open Sidebar">
+            <AlignLeft />
+          </IconButton>
+          <DateHeading
+            aria-label="Currently selected month and year"
+            title="Currently selected month and year"
+          >
+            {month} <span>{year}</span>
+          </DateHeading>
+        </Left>
 
-      <FlexBase>
-        <Logo />
-      </FlexBase>
+        <FlexBase>
+          <Logo />
+        </FlexBase>
 
-      <Right justify="flex-end">
-        <TextButton
-          aria-label="Toggle fortune cookies"
-          title="Toggle fortune cookies"
-        >
-          <span>Fortune Cookies?</span> <Cookie />
-        </TextButton>
-        <TextButton
-          aria-label="Open note for today"
-          title="Open note for today"
-        >
-          <span>Today</span> <Sun />
-        </TextButton>
-        <IconButton>
-          <Plus />
-        </IconButton>
-      </Right>
+        <Right justify="flex-end">
+          <TextButton
+            aria-label="Toggle fortune cookies"
+            title="Toggle fortune cookies"
+          >
+            <span>Fortune Cookies?</span> <Cookie />
+          </TextButton>
+          <TextButton
+            aria-label="Open note for today"
+            title="Open note for today"
+          >
+            <span>Today</span> <Sun />
+          </TextButton>
+          <IconButton>
+            <Plus />
+          </IconButton>
+        </Right>
+      </div>
+      {children}
     </StyledHeader>
   );
 }
@@ -52,12 +55,15 @@ const StyledHeader = styled.header`
   background: ${styleTokens.gradient["white-to-gray"]};
   width: 100%;
   height: fit-content;
-  display: grid;
-  grid-template-columns: 1fr 4rem 1fr;
   color: ${styleTokens.color.gray["400"]};
   font-weight: bold;
-  padding: ${styleTokens.space[2]} ${styleTokens.space[4]};
-  align-items: center;
+
+  & > div:first-of-type {
+    padding: ${styleTokens.space[3]} ${styleTokens.space[4]};
+    display: grid;
+    grid-template-columns: 1fr 4rem 1fr;
+    align-items: center;
+  }
 `;
 const Logo = styled.div`
   aspect-ratio: 1;
@@ -105,7 +111,7 @@ const ButtonBase = styled.button`
   align-items: center;
   gap: ${styleTokens.space[2]};
 
-  &:hover {
+  &:active {
     color: ${styleTokens.color.orange};
   }
 `;

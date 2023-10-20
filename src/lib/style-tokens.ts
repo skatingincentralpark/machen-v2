@@ -45,6 +45,7 @@ export const styleTokens = {
     },
     ["orange"]: "#ef3d23",
     ["blue"]: "#3f85c6",
+    ["white"]: "#ffffff",
   },
   ["space"]: {
     ["0"]: "0", // 0px
@@ -84,6 +85,6 @@ export const styleTokens = {
   },
   ["gradient"]: {
     ["white-to-gray"]:
-      "linear-gradient(0deg, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 1) 35%)",
+      "linear-gradient(0deg, rgba(248, 248, 248, 1) 0%, rgba(255, 255, 255, 1) 35%)",
   },
 } as const;

@@ -1,3 +1,5 @@
+"use client";
+import WeekdayCells from "./Calendar/WeekdayCells";
 import Header from "./Header";
 
 export default function DashboardLayout({
@@ -7,8 +9,10 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <Header />
-      <main>{children}</main>
+      <Header>
+        <WeekdayCells />
+      </Header>
+      {children}
     </>
   );
 }
