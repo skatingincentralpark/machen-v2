@@ -1,9 +1,12 @@
+"use client";
+
 import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
 import { weekdays } from "@/lib/date";
 
 export default function WeekdayCells() {
   const isWeekend = (day: string) => day === "Saturday" || day === "Sunday";
+
   return (
     <DayLabels>
       {weekdays.map((day, index) => (

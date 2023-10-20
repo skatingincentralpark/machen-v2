@@ -2,12 +2,30 @@
 import styled from "@emotion/styled";
 import DayCells from "./DayCells";
 import { styleTokens } from "@/lib/style-tokens";
+import Header from "../Header";
+import WeekdayCells from "./WeekdayCells";
+import MonthYearSelector from "./MonthYearBar";
 
 export default function Calendar() {
   return (
-    <Wrapper>
-      <DayCells />
-    </Wrapper>
+    <>
+      <MonthYearSelector />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <Header>
+          <WeekdayCells />
+        </Header>
+        <Wrapper>
+          <DayCells />
+        </Wrapper>
+      </div>
+    </>
   );
 }
 
