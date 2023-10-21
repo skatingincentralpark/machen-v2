@@ -1,5 +1,8 @@
 import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
+import { DialogRoot, DialogTrigger } from "../UI/Dialog";
+import Editor from "./Editor";
+import { useDate } from "@/context/DateContext";
 
 interface Props {
   date: Date;
@@ -21,10 +24,17 @@ export default function DayCell({ date, currentDate, text }: Props) {
     ? "isWeekend"
     : "default";
 
+  const { setCurrentDate } = useDate();
+
   return (
-    <Cell muted={notCurrentMonth}>
-      <DateBadge variant={variant}>{date.getDate()}</DateBadge>
-    </Cell>
+    <DialogRoot>
+      <DialogTrigger asChild>
+        <Cell muted={notCurrentMonth} onClick={() => setCurrentDate(date)}>
+          <DateBadge variant={variant}>{date.getDate()}</DateBadge>
+        </Cell>
+      </DialogTrigger>
+      <Editor />
+    </DialogRoot>
   );
 }
 
@@ -45,6 +55,7 @@ const Cell = styled.button<CellProps>`
   height: fit-content;
   aspect-ratio: 1;
   color: ${styleTokens.color.gray["400"]};
+  transition: padding 0.2s ease-in-out;
 
   ${styleTokens.media.sm} {
     padding: ${styleTokens.space[2]};
@@ -91,6 +102,7 @@ const DateBadge = styled.div<DateBadgeProps>`
   width: 100%;
   font-size: ${styleTokens.size["2xl"]};
   font-weight: normal;
+  transition: font-size 0.2s ease-in-out, background-color 0.2s ease-in-out;
 
   ${styleTokens.media.sm} {
     padding: ${styleTokens.space[2]};

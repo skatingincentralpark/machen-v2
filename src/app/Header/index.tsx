@@ -63,6 +63,7 @@ const StyledHeader = styled.header`
   height: fit-content;
   color: ${styleTokens.color.gray["400"]};
   font-weight: bold;
+  border-bottom: 1px solid ${styleTokens.color.gray["300"]};
 
   & > div:first-of-type {
     padding: ${styleTokens.space[3]} ${styleTokens.space[4]};

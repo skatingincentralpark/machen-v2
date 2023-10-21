@@ -16,6 +16,7 @@ interface INotesContext {
   setCurrentDate: Dispatch<SetStateAction<Date>>;
   currentlocaleDateString: string;
   shortDateString: string;
+  medDateString: string;
 }
 
 const Context = createContext<INotesContext>({
@@ -23,12 +24,14 @@ const Context = createContext<INotesContext>({
   setCurrentDate: () => {},
   currentlocaleDateString: "",
   shortDateString: "",
+  medDateString: "",
 });
 
 const DateController = ({ children }: { children: ReactNode }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const shortDateString = format(currentDate, "MMMM yyyy");
+  const medDateString = format(currentDate, "d MMMM yyyy");
   const currentlocaleDateString = currentDate.toLocaleDateString(undefined, {
     dateStyle: "long",
   });
@@ -40,6 +43,7 @@ const DateController = ({ children }: { children: ReactNode }) => {
         setCurrentDate,
         currentlocaleDateString,
         shortDateString,
+        medDateString,
       }}
     >
       {children}

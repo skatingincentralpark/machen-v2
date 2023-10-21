@@ -76,7 +76,6 @@ export default function DayCells() {
 const Cells = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-
   height: initial;
 
   ${styleTokens.media.sm} {
