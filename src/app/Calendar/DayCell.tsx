@@ -1,19 +1,22 @@
 import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
 import { DialogRoot, DialogTrigger } from "../UI/Dialog";
-import Editor from "./Editor";
 import { useDate } from "@/context/DateContext";
+
+import dynamic from "next/dynamic";
+const Editor = dynamic(() => import("./Editor"), { ssr: false });
 
 interface Props {
   date: Date;
   currentDate: Date;
-  text: string | undefined;
+  content: string | undefined;
+  title: string | undefined;
 }
 
-export default function DayCell({ date, currentDate, text }: Props) {
+export default function DayCell({ date, currentDate, content, title }: Props) {
   const notCurrentMonth = date.getMonth() !== currentDate.getMonth();
   const isToday = date.toDateString() === new Date().toDateString();
-  const hasNote = !!text;
+  const hasNote = !!content;
   const cellDay = date.getDay();
   const isWeekend = cellDay === 0 || cellDay === 6;
   const variant = isToday
@@ -33,7 +36,7 @@ export default function DayCell({ date, currentDate, text }: Props) {
           <DateBadge variant={variant}>{date.getDate()}</DateBadge>
         </Cell>
       </DialogTrigger>
-      <Editor />
+      <Editor content={content} title={title} />
     </DialogRoot>
   );
 }

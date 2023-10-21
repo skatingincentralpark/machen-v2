@@ -13,7 +13,7 @@ export interface NotesDataV2 {
     [month: number]: {
       [day: number]: {
         title: string;
-        text: string;
+        content: string;
       };
     };
   };

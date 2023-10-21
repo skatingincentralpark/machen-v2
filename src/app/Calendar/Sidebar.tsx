@@ -1,7 +1,7 @@
 "use client";
 import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
-import { NOTES_DATA_V2 } from "@/lib/data-calendar-v2";
+import { NOTES_DATA_V2 } from "@/lib/data-v2";
 import { type NotesDataV2 } from "@/types/note";
 import { format } from "date-fns";
 import { Cookie, HelpCircle } from "lucide-react";

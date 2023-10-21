@@ -12,14 +12,17 @@ import {
 } from "date-fns";
 import { useDate } from "@/context/DateContext";
 import { styleTokens } from "@/lib/style-tokens";
-import { NOTES_DATA_V2 } from "@/lib/data-calendar-v2";
+import { NOTES_DATA_V2 } from "@/lib/data-v2";
 import DayCell from "./DayCell";
+import { useNotesV2 } from "@/context/NotesContextV2";
 
 export default function DayCells() {
   const { currentDate } = useDate();
+  const { notes } = useNotesV2();
 
   interface Day {
-    text: string | undefined;
+    title: string | undefined;
+    content: string | undefined;
     date: Date;
   }
 
@@ -44,16 +47,18 @@ export default function DayCells() {
 
   const cells = [...datesInMonth, ...extraDatesInMonth].map((date) => {
     const day: Day = {
-      text: undefined,
+      title: undefined,
+      content: undefined,
       date,
     };
 
     const month = date.getMonth();
     const year = date.getFullYear();
-    const notesForDay = NOTES_DATA_V2?.[year]?.[month]?.[date.getDate()];
+    const notesForDay = notes?.[year]?.[month]?.[date.getDate()];
 
     if (notesForDay) {
-      day.text = notesForDay.text;
+      day.content = notesForDay.content;
+      day.title = notesForDay.title;
     }
 
     return day;
@@ -66,7 +71,8 @@ export default function DayCells() {
           key={`${cell.date.getMonth()}/${index}`}
           currentDate={currentDate}
           date={cell.date}
-          text={cell.text}
+          title={cell.title}
+          content={cell.content}
         />
       ))}
     </Cells>
