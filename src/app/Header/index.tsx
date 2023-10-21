@@ -5,12 +5,12 @@ import styled from "@emotion/styled";
 import { AlignLeft, Plus, Cookie, Sun } from "lucide-react";
 import { ButtonBase } from "../UI/Button";
 import { useLayout } from "@/context/LayoutContext";
+import { useDate } from "@/context/DateContext";
 
 export default function Header({ children }: { children?: React.ReactNode }) {
-  const date = new Date("2014-01-01");
-  const month = date.toLocaleString("default", { month: "long" });
-  const year = date.getFullYear();
   const { setSidebarOpen } = useLayout();
+  const { shortDateString } = useDate();
+  const dateStringSplit = shortDateString.split(" ");
 
   return (
     <StyledHeader>
@@ -20,7 +20,7 @@ export default function Header({ children }: { children?: React.ReactNode }) {
             aria-label="Currently selected month and year"
             title="Currently selected month and year"
           >
-            {month} <span>{year}</span>
+            {dateStringSplit[0]} <span>{dateStringSplit[1]}</span>
           </DateHeading>
         </Left>
 

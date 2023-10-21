@@ -1,5 +1,6 @@
 "use client";
 
+import { format } from "date-fns";
 import {
   type Dispatch,
   type ReactNode,
@@ -14,30 +15,32 @@ interface INotesContext {
   currentDate: Date;
   setCurrentDate: Dispatch<SetStateAction<Date>>;
   currentlocaleDateString: string;
+  shortDateString: string;
 }
 
 const Context = createContext<INotesContext>({
   currentDate: new Date(),
   setCurrentDate: () => {},
   currentlocaleDateString: "",
+  shortDateString: "",
 });
 
 const DateController = ({ children }: { children: ReactNode }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [currentlocaleDateString, setCurrentlocaleDateString] = useState("");
 
-  // Put in useEffect due to toLocaleDateString returning different values depending on region
-  useEffect(() => {
-    setCurrentlocaleDateString(
-      currentDate.toLocaleDateString(undefined, {
-        dateStyle: "long",
-      })
-    );
-  }, [currentDate]);
+  const shortDateString = format(currentDate, "MMMM yyyy");
+  const currentlocaleDateString = currentDate.toLocaleDateString(undefined, {
+    dateStyle: "long",
+  });
 
   return (
     <Context.Provider
-      value={{ currentDate, setCurrentDate, currentlocaleDateString }}
+      value={{
+        currentDate,
+        setCurrentDate,
+        currentlocaleDateString,
+        shortDateString,
+      }}
     >
       {children}
     </Context.Provider>

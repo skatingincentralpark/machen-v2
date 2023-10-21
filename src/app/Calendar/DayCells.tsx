@@ -1,6 +1,7 @@
 "use client";
 import styled from "@emotion/styled";
 import {
+  add,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
@@ -31,13 +32,15 @@ export default function DayCells() {
   });
 
   /** To ensure 42 cells always */
+  const lastDayOfDates = datesInMonth[datesInMonth.length - 1];
+  const needsExtraCells = datesInMonth.length === 35 && lastDayOfDates;
   const extraDatesInMonth =
-    datesInMonth.length === 35
-      ? eachDayOfInterval({
-          start: subWeeks(startOfWeek(firstDayOfMonth), 1),
-          end: subDays(startOfWeek(firstDayOfMonth), 1),
-        })
-      : [];
+    (needsExtraCells &&
+      eachDayOfInterval({
+        start: add(lastDayOfDates, { days: 1 }),
+        end: add(lastDayOfDates, { days: 7 }),
+      })) ||
+    [];
 
   const cells = [...datesInMonth, ...extraDatesInMonth].map((date) => {
     const day: Day = {
