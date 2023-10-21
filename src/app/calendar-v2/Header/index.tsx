@@ -3,6 +3,7 @@
 import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
 import { AlignLeft, Plus, Cookie, Sun } from "lucide-react";
+import { ButtonBase } from "../UI/Button";
 
 export default function Header({ children }: { children?: React.ReactNode }) {
   const date = new Date("2014-01-01");
@@ -13,9 +14,6 @@ export default function Header({ children }: { children?: React.ReactNode }) {
     <StyledHeader>
       <div>
         <Left justify="flex-start">
-          <IconButton aria-label="Open Sidebar">
-            <AlignLeft />
-          </IconButton>
           <DateHeading
             aria-label="Currently selected month and year"
             title="Currently selected month and year"
@@ -43,6 +41,9 @@ export default function Header({ children }: { children?: React.ReactNode }) {
           </TextButton>
           <IconButton>
             <Plus />
+          </IconButton>
+          <IconButton aria-label="Open Sidebar">
+            <AlignLeft />
           </IconButton>
         </Right>
       </div>
@@ -103,16 +104,6 @@ const Right = styled(FlexBase)`
 
   ${styleTokens.media["md"]} {
     font-size: ${styleTokens.size["lg"]};
-  }
-`;
-
-const ButtonBase = styled.button`
-  display: flex;
-  align-items: center;
-  gap: ${styleTokens.space[2]};
-
-  &:active {
-    color: ${styleTokens.color.orange};
   }
 `;
 const IconButton = styled(ButtonBase)``;

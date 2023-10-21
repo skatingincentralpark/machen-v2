@@ -5,6 +5,7 @@ import { styleTokens } from "@/lib/style-tokens";
 import Header from "../Header";
 import WeekdayCells from "./WeekdayCells";
 import MonthYearSelector from "./MonthYearBar";
+import Sidebar from "./Sidebar";
 
 export default function Calendar() {
   return (
@@ -25,6 +26,7 @@ export default function Calendar() {
           <DayCells />
         </Wrapper>
       </div>
+      <Sidebar />
     </>
   );
 }

@@ -7,3 +7,14 @@ export interface NotesData {
     };
   };
 }
+
+export interface NotesDataV2 {
+  [year: number]: {
+    [month: number]: {
+      [day: number]: {
+        title: string;
+        text: string;
+      };
+    };
+  };
+}
