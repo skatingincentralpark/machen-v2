@@ -12,3 +12,13 @@ export const ButtonBase = styled.button`
     color: ${styleTokens.color.orange};
   }
 `;
+export const ButtonBaseMonthYear = styled.button`
+  color: ${styleTokens.color.gray[400]};
+  background-color: ${styleTokens.color.gray[100]};
+  font-weight: bold;
+  height: 100%;
+
+  &:active {
+    background-color: ${styleTokens.color.gray[300]};
+  }
+`;

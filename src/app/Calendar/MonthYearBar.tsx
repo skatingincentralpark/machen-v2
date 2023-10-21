@@ -3,6 +3,9 @@ import { months } from "@/lib/date";
 import { styleTokens } from "@/lib/style-tokens";
 import { useDate } from "@/context/DateContext";
 import { setMonth } from "date-fns";
+import YearDialog from "./YearDialog";
+import { DialogTrigger } from "../UI/Dialog";
+import { ButtonBaseMonthYear } from "../UI/Button";
 
 export default function MonthYearSelector() {
   const { currentDate, setCurrentDate } = useDate();
@@ -18,9 +21,7 @@ export default function MonthYearSelector() {
           {month[0]}
         </MonthButton>
       ))}
-      <YearTrigger>
-        <div>2022</div>
-      </YearTrigger>
+      <YearDialog />
     </Wrapper>
   );
 }
@@ -30,17 +31,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   flex-shrink: 0;
   position: relative;
-`;
-const ButtonBase = styled.button`
-  color: ${styleTokens.color.gray[400]};
-  background-color: ${styleTokens.color.gray[100]};
-  border-right: 1px solid ${styleTokens.color.gray[300]};
-  font-weight: bold;
-  height: 100%;
 
-  &:active {
-    background-color: ${styleTokens.color.gray[300]};
-  }
+  outline: 1px solid ${styleTokens.color.gray[300]};
+  outline-offset: -0.5px;
 `;
 interface MonthButtonProps {
   variant: "selected" | "default";
@@ -57,7 +50,7 @@ const monthButtonVariants = {
     activeBgColor: styleTokens.color.slate[300],
   },
 } as const;
-const MonthButton = styled(ButtonBase)<MonthButtonProps>`
+const MonthButton = styled(ButtonBaseMonthYear)<MonthButtonProps>`
   text-transform: uppercase;
   aspect-ratio: 1;
   max-height: 3rem;
@@ -71,7 +64,7 @@ const MonthButton = styled(ButtonBase)<MonthButtonProps>`
       monthButtonVariants[variant].activeBgColor};
   }
 `;
-const YearTrigger = styled(ButtonBase)`
+const YearTrigger = styled(ButtonBaseMonthYear)`
   display: flex;
   justify-content: center;
   align-items: center;
