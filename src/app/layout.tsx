@@ -18,7 +18,7 @@ export default function RootLayout({
       >
         <DateController>
           <NotesController>
-            <Header />
+            {/* <Header /> */}
             {children}
           </NotesController>
         </DateController>

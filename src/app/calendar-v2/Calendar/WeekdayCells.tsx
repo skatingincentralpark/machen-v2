@@ -39,7 +39,7 @@ const DayLabel = styled.div<DayLabelProps>`
   & > span:last-of-type {
     display: none;
 
-    ${styleTokens.media.md} {
+    ${styleTokens.media.xl} {
       display: block;
     }
   }

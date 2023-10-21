@@ -36,6 +36,8 @@ const MonthButton = styled(ButtonBase)`
   text-transform: uppercase;
   aspect-ratio: 1;
   max-height: 3rem;
+  outline: 1px solid ${styleTokens.color.gray[300]};
+  outline-offset: -0.5px;
 `;
 const YearTrigger = styled(ButtonBase)`
   display: flex;
