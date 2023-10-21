@@ -6,6 +6,7 @@ import { type NotesDataV2 } from "@/types/note";
 import { format } from "date-fns";
 import { Cookie, HelpCircle } from "lucide-react";
 import { ButtonBase } from "../UI/Button";
+import { useLayout } from "@/context/LayoutContext";
 
 export default function Sidebar() {
   interface Note {
@@ -41,6 +42,10 @@ export default function Sidebar() {
   }
 
   const notesArray = convertNotesDataToArray(NOTES_DATA_V2);
+
+  const { sidebarOpen } = useLayout();
+
+  if (!sidebarOpen) return null;
 
   return (
     <Wrapper>

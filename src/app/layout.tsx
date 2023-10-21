@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/Old/Header";
 import "@/styles/global.css";
 // import { Inter } from "next/font/google";
 import { NotesController } from "@/context/NotesContext";
@@ -18,8 +18,15 @@ export default function RootLayout({
       >
         <DateController>
           <NotesController>
-            {/* <Header /> */}
-            {children}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                height: "100%",
+              }}
+            >
+              {children}
+            </div>
           </NotesController>
         </DateController>
       </body>

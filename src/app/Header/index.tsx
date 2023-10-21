@@ -4,11 +4,13 @@ import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
 import { AlignLeft, Plus, Cookie, Sun } from "lucide-react";
 import { ButtonBase } from "../UI/Button";
+import { useLayout } from "@/context/LayoutContext";
 
 export default function Header({ children }: { children?: React.ReactNode }) {
   const date = new Date("2014-01-01");
   const month = date.toLocaleString("default", { month: "long" });
   const year = date.getFullYear();
+  const { setSidebarOpen } = useLayout();
 
   return (
     <StyledHeader>
@@ -42,7 +44,10 @@ export default function Header({ children }: { children?: React.ReactNode }) {
           <IconButton>
             <Plus />
           </IconButton>
-          <IconButton aria-label="Open Sidebar">
+          <IconButton
+            aria-label="Open Sidebar"
+            onClick={() => setSidebarOpen((x) => !x)}
+          >
             <AlignLeft />
           </IconButton>
         </Right>

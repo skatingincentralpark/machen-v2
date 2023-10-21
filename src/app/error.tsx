@@ -1,7 +1,7 @@
 "use client";
 import styled from "@emotion/styled";
 import { media } from "@/lib/media-queries";
-import { Button } from "@/components/UI/Button";
+import { Button } from "@/components/Old/UI/Button";
 
 export default function Error({
   error,

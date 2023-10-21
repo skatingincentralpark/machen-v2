@@ -1,24 +1,26 @@
 "use client";
+import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
-import Calendar from "@/components/Calendar";
-import { media } from "@/lib/media-queries";
+import dynamic from "next/dynamic";
 
-export default function Home() {
-  return (
-    <Main>
-      <Calendar />
-    </Main>
-  );
-}
+const Calendar = dynamic(() => import("./Calendar"), {
+  ssr: false,
+  loading: () => <Placeholder>Machen</Placeholder>,
+});
 
-const Main = styled.main`
+const Placeholder = styled.h2`
+  font-size: ${styleTokens.size["3xl"]};
+  color: ${styleTokens.color.orange};
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: end;
-  padding: 1rem;
-
-  ${media.sm} {
-    padding: 2rem;
-  }
+  align-items: center;
+  justify-content: center;
 `;
+
+export default function Page() {
+  return (
+    <>
+      <Calendar />
+    </>
+  );
+}
