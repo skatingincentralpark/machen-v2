@@ -16,6 +16,7 @@ interface INotesContext {
   setDummyNotes: () => void;
   saveNote: (title: string, content: string, date: Date) => void;
   deleteNote: (date: Date) => void;
+  todaysNote: { title: string; content: string } | undefined;
 }
 
 const Context = createContext<INotesContext>({
@@ -24,6 +25,7 @@ const Context = createContext<INotesContext>({
   setDummyNotes: () => {},
   saveNote: () => {},
   deleteNote: () => {},
+  todaysNote: { title: "", content: "" },
 });
 
 function deleteMonthIfEmpty(newNotes: NotesData, year: number, month: number) {
@@ -136,7 +138,23 @@ const NotesController = ({ children }: { children: ReactNode }) => {
     });
   }
 
-  const value = { notes, setNotes, setDummyNotes, saveNote, deleteNote };
+  function getTodaysNote() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const day = today.getDate();
+
+    return notes[year]?.[month]?.[day];
+  }
+
+  const value = {
+    notes,
+    setNotes,
+    setDummyNotes,
+    saveNote,
+    deleteNote,
+    todaysNote: getTodaysNote(),
+  };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

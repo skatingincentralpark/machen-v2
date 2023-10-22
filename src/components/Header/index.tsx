@@ -6,12 +6,13 @@ import { AlignLeft, Plus, Cookie, Sun } from "lucide-react";
 import { ButtonBase } from "../UI/Button";
 import { useLayout } from "@/context/LayoutContext";
 import { useDate } from "@/context/DateContext";
+import TodaysNoteDialog from "./TodaysNoteDialog";
 
 export default function Header({ children }: { children?: React.ReactNode }) {
-  const { setSidebarOpen } = useLayout();
+  const { toggleSidebar } = useLayout();
   const { shortDateString } = useDate();
   const dateStringSplit = shortDateString.split(" ");
-
+  console.log("header -rernde");
   return (
     <StyledHeader>
       <div>
@@ -29,25 +30,26 @@ export default function Header({ children }: { children?: React.ReactNode }) {
         </FlexBase>
 
         <Right justify="flex-end">
-          <TextButton
+          {/* <TextButton
             aria-label="Toggle fortune cookies"
             title="Toggle fortune cookies"
           >
             <span>Fortune Cookies?</span> <Cookie />
-          </TextButton>
-          <TextButton
-            aria-label="Open note for today"
-            title="Open note for today"
-          >
-            <span>Today</span> <Sun />
-          </TextButton>
-          <IconButton>
+          </TextButton> */}
+          <TodaysNoteDialog
+            trigger={
+              <TextButton
+                aria-label="Open note for today"
+                title="Open note for today"
+              >
+                <span>Today</span> <Sun />
+              </TextButton>
+            }
+          />
+          {/* <IconButton>
             <Plus />
-          </IconButton>
-          <IconButton
-            aria-label="Open Sidebar"
-            onClick={() => setSidebarOpen((x) => !x)}
-          >
+          </IconButton> */}
+          <IconButton aria-label="Open Sidebar" onClick={toggleSidebar}>
             <AlignLeft />
           </IconButton>
         </Right>

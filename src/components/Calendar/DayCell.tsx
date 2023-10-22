@@ -15,6 +15,7 @@ interface Props {
 export default function DayCell({ date, currentDate, content, title }: Props) {
   const notCurrentMonth = date.getMonth() !== currentDate.getMonth();
 
+  console.log("lol");
   function getVariant(): keyof typeof badgeVariants {
     const isToday = date.toDateString() === new Date().toDateString();
     const hasNote = !!content;
