@@ -1,42 +1,51 @@
 import styled from "@emotion/styled";
-import { DialogClose, DialogContent } from "../UI/Dialog";
+import { DialogClose } from "../UI/Dialog";
 import { styleTokens } from "@/lib/style-tokens";
 import { useDate } from "@/context/DateContext";
 import { ChevronRight } from "lucide-react";
 import { useNotesV2 } from "@/context/NotesContextV2";
 import { ButtonBase } from "../UI/Button";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function Editor({
+export default function PlainTextEditor({
   title,
   content,
+  close,
 }: {
   title: string | undefined;
   content: string | undefined;
+  close: () => void;
 }) {
   const { medDateString, currentDate } = useDate();
   const { saveNote, deleteNote } = useNotesV2();
   const dateStringSplit = medDateString.split(" ");
 
+  const initialEditorEmpty = !title && !content;
+
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
 
-  const initialEditorEmpty = !title && !content;
+  useEffect(() => {
+    titleRef.current?.focus();
+  }, []);
+
+  const [error, setError] = useState<string | null>(null);
 
   const handleSave = () => {
-    const title = titleRef.current?.value;
+    const title = titleRef.current?.value || "";
     const content = contentRef.current?.value;
 
-    if (!title && !content)
-      return console.error("title and content are both empty");
-
-    if (title && content) {
-      saveNote(title, content, currentDate);
+    if (!content) {
+      setError("Content is required");
+      return contentRef.current?.focus();
     }
+
+    saveNote(title, content, currentDate);
+    close();
   };
 
   return (
-    <Content>
+    <>
       <Left>
         <h2>
           <strong>
@@ -50,7 +59,7 @@ export default function Editor({
           </button>
         </DialogClose>
       </Left>
-      <Main>
+      <Form onSubmit={(e) => e.preventDefault()}>
         <Input ref={titleRef} placeholder="Title" defaultValue={title}></Input>
         <TextArea
           ref={contentRef}
@@ -58,49 +67,22 @@ export default function Editor({
           defaultValue={content}
           name=""
           id=""
-        ></TextArea>
-        <DialogClose asChild>
-          <ButtonBase onClick={handleSave}>Save</ButtonBase>
-        </DialogClose>
-        {!initialEditorEmpty && (
-          <DialogClose asChild>
-            <ButtonBase onClick={() => deleteNote(currentDate)}>
-              Delete
-            </ButtonBase>
-          </DialogClose>
-        )}
-      </Main>
-    </Content>
+        />
+        {error && <Error>{error}</Error>}
+
+        <ButtonWrapper>
+          <Button onClick={handleSave}>Save</Button>
+          {!initialEditorEmpty && (
+            <DialogClose asChild>
+              <Button onClick={() => deleteNote(currentDate)}>Delete</Button>
+            </DialogClose>
+          )}
+        </ButtonWrapper>
+      </Form>
+    </>
   );
 }
 
-const Content = styled(DialogContent)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-
-  background: linear-gradient(270deg, #dde3e4, #dcedf0);
-  background-size: 600% 600%;
-
-  animation: AnimationName 30s ease infinite;
-
-  @keyframes AnimationName {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  display: flex;
-`;
 const Left = styled.div`
   background-color: ${styleTokens.color.white};
   writing-mode: vertical-lr;
@@ -118,7 +100,7 @@ const Left = styled.div`
     width: 100%;
   }
 `;
-const Main = styled.div`
+const Form = styled.form`
   padding: ${styleTokens.space[4]};
   display: flex;
   flex-direction: column;
@@ -155,4 +137,22 @@ const Input = styled.input`
     border-color: ${styleTokens.color.gray[400]};
     outline: none;
   }
+`;
+const ButtonWrapper = styled.div`
+  margin-top: ${styleTokens.space[4]};
+  display: flex;
+  gap: ${styleTokens.space[2]};
+`;
+const Button = styled(ButtonBase)`
+  padding: ${styleTokens.space[2]} ${styleTokens.space[4]};
+  background-color: transparent;
+  border: 1px dashed ${styleTokens.color.slate[300]};
+  color: ${styleTokens.color.gray[400]};
+  flex-grow: 1;
+  text-align: center;
+  justify-content: center;
+`;
+const Error = styled.p`
+  color: ${styleTokens.color.orange};
+  font-size: ${styleTokens.size.xs};
 `;

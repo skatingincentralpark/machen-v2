@@ -1,10 +1,9 @@
 import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
-import { DialogRoot, DialogTrigger } from "../UI/Dialog";
+import { DialogContent, DialogRoot, DialogTrigger } from "../UI/Dialog";
 import { useDate } from "@/context/DateContext";
-
-import dynamic from "next/dynamic";
-const Editor = dynamic(() => import("./Editor"), { ssr: false });
+import PlainTextEditor from "./Editor";
+import { useState } from "react";
 
 interface Props {
   date: Date;
@@ -15,28 +14,43 @@ interface Props {
 
 export default function DayCell({ date, currentDate, content, title }: Props) {
   const notCurrentMonth = date.getMonth() !== currentDate.getMonth();
-  const isToday = date.toDateString() === new Date().toDateString();
-  const hasNote = !!content;
-  const cellDay = date.getDay();
-  const isWeekend = cellDay === 0 || cellDay === 6;
-  const variant = isToday
-    ? "today"
-    : hasNote
-    ? "hasNote"
-    : isWeekend
-    ? "isWeekend"
-    : "default";
+
+  function getVariant(): keyof typeof badgeVariants {
+    const isToday = date.toDateString() === new Date().toDateString();
+    const hasNote = !!content;
+    const day = date.getDay();
+    const isWeekend = day === 0 || day === 6;
+    const variant = isToday
+      ? "today"
+      : hasNote
+      ? "hasNote"
+      : isWeekend
+      ? "isWeekend"
+      : "default";
+
+    return variant;
+  }
 
   const { setCurrentDate } = useDate();
+  const [open, setOpen] = useState(false);
 
   return (
-    <DialogRoot>
+    <DialogRoot
+      open={open}
+      onOpenChange={() => !notCurrentMonth && setOpen((x) => !x)}
+    >
       <DialogTrigger asChild>
         <Cell muted={notCurrentMonth} onClick={() => setCurrentDate(date)}>
-          <DateBadge variant={variant}>{date.getDate()}</DateBadge>
+          <DateBadge variant={getVariant()}>{date.getDate()}</DateBadge>
         </Cell>
       </DialogTrigger>
-      <Editor content={content} title={title} />
+      <SDialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
+        <PlainTextEditor
+          content={content}
+          title={title}
+          close={() => setOpen(false)}
+        />
+      </SDialogContent>
     </DialogRoot>
   );
 }
@@ -70,23 +84,26 @@ const Cell = styled.button<CellProps>`
     background-color: ${styleTokens.color.gray[200]};
   }
 `;
-// type BadgeVariants  = "today" | "hasNote" | "default";
 const badgeVariants = {
   isWeekend: {
     backgroundColor: "none",
     color: styleTokens.color.slate["200"],
+    outlineColor: "none",
   },
   default: {
     backgroundColor: "none",
     color: "inherit",
+    outlineColor: "none",
   },
   hasNote: {
     backgroundColor: styleTokens.color.gray[300],
     color: styleTokens.color.slate["300"],
+    outlineColor: styleTokens.color.slate[300],
   },
   today: {
     backgroundColor: styleTokens.color.blue,
     color: styleTokens.color.white,
+    outlineColor: "none",
   },
 } as const;
 interface DateBadgeProps {
@@ -106,6 +123,8 @@ const DateBadge = styled.div<DateBadgeProps>`
   font-size: ${styleTokens.size["2xl"]};
   font-weight: normal;
   transition: font-size 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  outline: 1px solid transparent;
+  outline-color: ${({ variant }) => badgeVariants[variant].outlineColor};
 
   ${styleTokens.media.sm} {
     padding: ${styleTokens.space[2]};
@@ -114,4 +133,32 @@ const DateBadge = styled.div<DateBadgeProps>`
     font-size: ${styleTokens.size["lg"]};
     font-weight: bold;
   }
+`;
+const SDialogContent = styled(DialogContent)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 100dvh;
+  z-index: 10;
+
+  background: linear-gradient(270deg, #dde3e4, #dcedf0);
+  background-size: 600% 600%;
+
+  animation: AnimationName 30s ease infinite;
+
+  @keyframes AnimationName {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  display: flex;
 `;
