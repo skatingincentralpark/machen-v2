@@ -1,15 +1,13 @@
 # MachenV2 📝
 
-This is a WIP remake of [MachenV1](https://machen.vercel.app/calendar). MachenV2 is an accessible daily note-taking web app using lexical as the text editor. You can navigate and use the app using the keyboard. Notes are saved in local storage.
+This is a WIP remake of [MachenV1](https://machen.vercel.app/calendar). MachenV2 is an accessible daily note-taking web app. You can navigate and use the app using the keyboard. Notes are saved in local storage.
 
 ## Features
 
 - The user should be able to navigate between different months and years.
 - The user should be able to use the editor to create new notes and saving it should highlight the day on the calendar.
 - The user should be able to delete notes.
-- All UI should remain aligned within the grid and maintain correct stacking context.
 - All UI should be fully accessible: fully navigable via keyboard, focus should be trapped in modals and dialogs, correct semantics and WAI-ARIA recommendations.
-- Initial load should be quick. Heavy Editor Component will be lazy loaded when user clicks a day cell.
 - Editor should be responsive, working seemlessly on mobile.
 - Tested with React Testing Library to ensure correct behaviour according to expectations.
 
