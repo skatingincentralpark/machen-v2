@@ -3,7 +3,7 @@ import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
 
-const Calendar = dynamic(() => import("./Calendar"), {
+const Calendar = dynamic(() => import("@/components/Calendar"), {
   ssr: false,
   loading: () => <Placeholder>Machen</Placeholder>,
 });

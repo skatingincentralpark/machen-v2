@@ -1,7 +1,8 @@
 "use client";
 import styled from "@emotion/styled";
 import { media } from "@/lib/media-queries";
-import { Button } from "@/components/Old/UI/Button";
+
+import { ButtonBase } from "@/components/UI/Button";
 
 export default function Error({
   error,
@@ -25,10 +26,8 @@ export default function Error({
         <ErrorText>Error: {error.message}</ErrorText>
         <br />
         <ButtonWrapper>
-          <Button onClick={reset}>Try again</Button>
-          <Button onClick={deleteAllNotes} variant="destructive">
-            Delete all notes
-          </Button>
+          <ButtonBase onClick={reset}>Try again</ButtonBase>
+          <ButtonBase onClick={deleteAllNotes}>Delete all notes</ButtonBase>
         </ButtonWrapper>
       </Wrapper>
     </Main>
