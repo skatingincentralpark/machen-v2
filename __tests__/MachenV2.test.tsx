@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Home from "@/app/page";
 import { NotesController } from "@/context/NotesContext";
-import { NOTES_DATA } from "@/lib/data";
+import { DUMMY_NOTES_DATA } from "@/lib/data";
 import userEvent from "@testing-library/user-event";
 import Header from "@/components/Header";
 import { DateController } from "@/context/DateContext";
@@ -34,7 +34,7 @@ const setAndAssertDummyData = async () => {
   // Need to mock fetch as it is not available in Node.js where Jest tests run.
   mockFetch.mockResolvedValue({
     ok: true,
-    json: async () => Promise.resolve(NOTES_DATA),
+    json: async () => Promise.resolve(DUMMY_NOTES_DATA),
   } as Response);
 
   const headerMenuButton = screen.getByTestId("header-menu-button");

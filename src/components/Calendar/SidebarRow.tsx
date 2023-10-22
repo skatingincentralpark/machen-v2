@@ -2,7 +2,7 @@ import { useDate } from "@/context/DateContext";
 import { DialogTrigger, DialogPortal, DialogRoot } from "../UI/Dialog";
 import PlainTextEditor, { EditorDialogContent } from "./Editor";
 import { useState } from "react";
-import { NoteForSidebar } from "./Sidebar";
+import { type NoteForSidebar } from "./Sidebar";
 import { ButtonBase } from "../UI/Button";
 import styled from "@emotion/styled";
 import { styleTokens } from "@/lib/style-tokens";

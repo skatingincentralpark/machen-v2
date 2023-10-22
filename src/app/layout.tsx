@@ -1,11 +1,6 @@
-import Header from "@/components/Old/Header";
 import "@/styles/global.css";
-// import { Inter } from "next/font/google";
-import { NotesController } from "@/context/NotesContext";
 import { DateController } from "@/context/DateContext";
-import { NotesControllerV2 } from "@/context/NotesContextV2";
-
-// const inter = Inter({ subsets: ["latin"] });
+import { NotesController } from "@/context/NotesContext";
 
 export default function RootLayout({
   children,
@@ -14,11 +9,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-      // className={inter.className}
-      >
+      <body>
         <DateController>
-          <NotesControllerV2>
+          <NotesController>
             <div
               style={{
                 display: "flex",
@@ -28,7 +21,7 @@ export default function RootLayout({
             >
               {children}
             </div>
-          </NotesControllerV2>
+          </NotesController>
         </DateController>
       </body>
     </html>

@@ -1,6 +1,6 @@
 import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
-import { DialogContent, DialogRoot, DialogTrigger } from "../UI/Dialog";
+import { DialogRoot, DialogTrigger } from "../UI/Dialog";
 import { useDate } from "@/context/DateContext";
 import PlainTextEditor, { EditorDialogContent } from "./Editor";
 import { useState } from "react";

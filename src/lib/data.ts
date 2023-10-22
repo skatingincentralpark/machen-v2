@@ -1,8 +1,6 @@
-// ⚠️ To-do: remvoe eslint disable comments
+import { type NotesData } from "@/types/note";
 
-import { type NotesDataV2 } from "@/types/note";
-
-export const NOTES_DATA_V2: NotesDataV2 = {
+export const DUMMY_NOTES_DATA: NotesData = {
   2023: {
     9: {
       1: {
@@ -46,4 +44,4 @@ const Note = z.object({
 const Day = z.record(Note);
 const Month = z.record(Day);
 const Year = z.record(Month);
-export const NotesDataV2Schema = Year;
+export const NotesDataSchema = Year;

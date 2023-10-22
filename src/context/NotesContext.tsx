@@ -1,7 +1,7 @@
 "use client";
 
-import { NotesDataV2Schema } from "@/lib/data-v2";
-import { type NotesDataV2 } from "@/types/note";
+import { NotesDataSchema } from "@/lib/data";
+import { type NotesData } from "@/types/note";
 import React, {
   type ReactNode,
   createContext,
@@ -11,8 +11,8 @@ import React, {
 } from "react";
 
 interface INotesContext {
-  notes: NotesDataV2;
-  setNotes: React.Dispatch<React.SetStateAction<NotesDataV2>>;
+  notes: NotesData;
+  setNotes: React.Dispatch<React.SetStateAction<NotesData>>;
   setDummyNotes: () => void;
   saveNote: (title: string, content: string, date: Date) => void;
   deleteNote: (date: Date) => void;
@@ -26,11 +26,7 @@ const Context = createContext<INotesContext>({
   deleteNote: () => {},
 });
 
-function deleteMonthIfEmpty(
-  newNotes: NotesDataV2,
-  year: number,
-  month: number
-) {
+function deleteMonthIfEmpty(newNotes: NotesData, year: number, month: number) {
   const monthIsEmpty = Object.keys(newNotes[year]?.[month] ?? {}).length === 0;
 
   if (monthIsEmpty) {
@@ -39,7 +35,7 @@ function deleteMonthIfEmpty(
   }
 }
 
-function deleteYearIfEmpty(newNotes: NotesDataV2, year: number) {
+function deleteYearIfEmpty(newNotes: NotesData, year: number) {
   const yearIsEmpty = Object.keys(newNotes[year] ?? {}).length === 0;
 
   if (yearIsEmpty) {
@@ -47,8 +43,8 @@ function deleteYearIfEmpty(newNotes: NotesDataV2, year: number) {
   }
 }
 
-const NotesControllerV2 = ({ children }: { children: ReactNode }) => {
-  const [notes, setNotes] = useState<NotesDataV2>({});
+const NotesController = ({ children }: { children: ReactNode }) => {
+  const [notes, setNotes] = useState<NotesData>({});
 
   useEffect(() => {
     function getDataFromStorage() {
@@ -57,7 +53,7 @@ const NotesControllerV2 = ({ children }: { children: ReactNode }) => {
 
       const initialValue: unknown = JSON.parse(machenData);
 
-      const val = NotesDataV2Schema.safeParse(initialValue);
+      const val = NotesDataSchema.safeParse(initialValue);
 
       if (!val.success) {
         console.error("Something went wrong retreiving notes data.");
@@ -78,7 +74,7 @@ const NotesControllerV2 = ({ children }: { children: ReactNode }) => {
     const dummyNotes = await fetch(`${baseUrl}/api/notes`);
     const dummyNotesData: unknown = await dummyNotes.json();
 
-    const data = NotesDataV2Schema.safeParse(dummyNotesData);
+    const data = NotesDataSchema.safeParse(dummyNotesData);
     if (!data.success) throw new Error("The dummy notes data is not valid.");
 
     setNotes(data);
@@ -147,4 +143,4 @@ const NotesControllerV2 = ({ children }: { children: ReactNode }) => {
 
 const useNotesV2 = () => useContext(Context);
 
-export { NotesControllerV2, useNotesV2 };
+export { NotesController, useNotesV2 };

@@ -1,12 +1,12 @@
 "use client";
 import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
-import { type NotesDataV2 } from "@/types/note";
+import { type NotesData } from "@/types/note";
 import { format } from "date-fns";
 import { Cookie, HelpCircle } from "lucide-react";
 import { ButtonBase } from "../UI/Button";
 import { useLayout } from "@/context/LayoutContext";
-import { useNotesV2 } from "@/context/NotesContextV2";
+import { useNotesV2 } from "@/context/NotesContext";
 import SidebarRow from "./SidebarRow";
 export interface NoteForSidebar {
   date: Date;
@@ -19,7 +19,7 @@ export default function Sidebar() {
   const { notes } = useNotesV2();
 
   /** Move this into context I guess */
-  function convertNotesDataToArray(data: NotesDataV2): NoteForSidebar[] {
+  function convertNotesDataToArray(data: NotesData): NoteForSidebar[] {
     const notesArray: NoteForSidebar[] = [];
 
     for (const year in data) {

@@ -4,7 +4,6 @@ import { styleTokens } from "@/lib/style-tokens";
 import { useDate } from "@/context/DateContext";
 import { setMonth } from "date-fns";
 import YearDialog from "./YearDialog";
-import { DialogTrigger } from "../UI/Dialog";
 import { ButtonBaseMonthYear } from "../UI/Button";
 
 export default function MonthYearSelector() {
@@ -62,14 +61,5 @@ const MonthButton = styled(ButtonBaseMonthYear)<MonthButtonProps>`
   &:active {
     background-color: ${({ variant }) =>
       monthButtonVariants[variant].activeBgColor};
-  }
-`;
-const YearTrigger = styled(ButtonBaseMonthYear)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  & > div {
-    writing-mode: vertical-rl;
   }
 `;

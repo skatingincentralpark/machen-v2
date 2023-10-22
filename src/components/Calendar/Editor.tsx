@@ -3,7 +3,7 @@ import { DialogClose, DialogContent } from "../UI/Dialog";
 import { styleTokens } from "@/lib/style-tokens";
 import { useDate } from "@/context/DateContext";
 import { ChevronRight } from "lucide-react";
-import { useNotesV2 } from "@/context/NotesContextV2";
+import { useNotesV2 } from "@/context/NotesContext";
 import { ButtonBase } from "../UI/Button";
 import { useEffect, useRef, useState } from "react";
 
