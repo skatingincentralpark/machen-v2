@@ -73,7 +73,6 @@ const Cell = styled.button<CellProps>`
   height: fit-content;
   aspect-ratio: 1;
   color: ${styleTokens.color.gray["400"]};
-  transition: padding 0.2s ease-in-out;
 
   ${styleTokens.media.sm} {
     padding: ${styleTokens.space[2]};
@@ -122,7 +121,6 @@ const DateBadge = styled.div<DateBadgeProps>`
   align-items: center;
   justify-content: center;
   font-weight: normal;
-  transition: font-size 0.2s ease-in-out, background-color 0.2s ease-in-out;
   outline: 1px solid transparent;
   outline-color: ${({ variant }) => badgeVariants[variant].outlineColor};
   width: 100%;
