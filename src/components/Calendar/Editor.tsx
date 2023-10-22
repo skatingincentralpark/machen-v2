@@ -3,7 +3,7 @@ import { DialogClose, DialogContent } from "../UI/Dialog";
 import { styleTokens } from "@/lib/style-tokens";
 import { useDate } from "@/context/DateContext";
 import { ChevronRight } from "lucide-react";
-import { useNotesV2 } from "@/context/NotesContext";
+import { useNotes } from "@/context/NotesContext";
 import { ButtonBase } from "../UI/Button";
 import { useEffect, useRef, useState } from "react";
 
@@ -17,7 +17,7 @@ export default function PlainTextEditor({
   close: () => void;
 }) {
   const { medDateString, currentDate } = useDate();
-  const { saveNote, deleteNote } = useNotesV2();
+  const { saveNote, deleteNote } = useNotes();
   const dateStringSplit = medDateString.split(" ");
 
   const initialEditorEmpty = !title && !content;

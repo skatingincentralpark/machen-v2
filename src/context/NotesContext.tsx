@@ -159,6 +159,6 @@ const NotesController = ({ children }: { children: ReactNode }) => {
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
-const useNotesV2 = () => useContext(Context);
+const useNotes = () => useContext(Context);
 
-export { NotesController, useNotesV2 };
+export { NotesController, useNotes };

@@ -3,11 +3,11 @@ import PlainTextEditor, {
 } from "@/components/Calendar/Editor";
 import { DialogRoot, DialogTrigger } from "../UI/Dialog";
 import { type ReactNode, useState } from "react";
-import { useNotesV2 } from "@/context/NotesContext";
+import { useNotes } from "@/context/NotesContext";
 
 export default function TodaysNoteDialog({ trigger }: { trigger: ReactNode }) {
   const [open, setOpen] = useState(false);
-  const { todaysNote } = useNotesV2();
+  const { todaysNote } = useNotes();
 
   return (
     <DialogRoot open={open} onOpenChange={setOpen}>

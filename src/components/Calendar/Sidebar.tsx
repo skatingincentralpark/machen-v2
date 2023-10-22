@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { Cookie, HelpCircle } from "lucide-react";
 import { ButtonBase } from "../UI/Button";
 import { useLayout } from "@/context/LayoutContext";
-import { useNotesV2 } from "@/context/NotesContext";
+import { useNotes } from "@/context/NotesContext";
 import SidebarRow from "./SidebarRow";
 export interface NoteForSidebar {
   date: Date;
@@ -16,7 +16,7 @@ export interface NoteForSidebar {
 }
 
 export default function Sidebar() {
-  const { notes } = useNotesV2();
+  const { notes } = useNotes();
 
   /** Move this into context I guess */
   function convertNotesDataToArray(data: NotesData): NoteForSidebar[] {

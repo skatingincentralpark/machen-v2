@@ -11,11 +11,11 @@ import {
 import { useDate } from "@/context/DateContext";
 import { styleTokens } from "@/lib/style-tokens";
 import DayCell from "./DayCell";
-import { useNotesV2 } from "@/context/NotesContext";
+import { useNotes } from "@/context/NotesContext";
 
 export default function DayCells() {
   const { currentDate } = useDate();
-  const { notes } = useNotesV2();
+  const { notes } = useNotes();
 
   interface Day {
     title: string | undefined;
