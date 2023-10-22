@@ -91,4 +91,6 @@ const VerticalButton = styled(ButtonBaseMonthYear)<VerticalButtonProps>`
 
 const VerticalButtonSpaced = styled(ButtonBaseMonthYear)<VerticalButtonProps>`
   padding: 1rem;
+  width: fit-content;
+  height: fit-content;
 `;
