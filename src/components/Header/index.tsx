@@ -112,7 +112,13 @@ const Right = styled(FlexBase)`
     font-size: ${styleTokens.size["lg"]};
   }
 `;
-const IconButton = styled(ButtonBase)``;
+const IconButton = styled(ButtonBase)`
+  display: none;
+
+  ${styleTokens.media["md"]} {
+    display: flex;
+  }
+`;
 const TextButton = styled(ButtonBase)`
   overflow: hidden;
   text-overflow: ellipsis;

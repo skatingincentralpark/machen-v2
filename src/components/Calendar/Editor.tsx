@@ -60,21 +60,27 @@ export default function PlainTextEditor({
         </DialogClose>
       </Left>
       <Form onSubmit={(e) => e.preventDefault()}>
-        <Input ref={titleRef} placeholder="Title" defaultValue={title}></Input>
-        <TextArea
-          ref={contentRef}
-          placeholder="Write something here..."
-          defaultValue={content}
-          name=""
-          id=""
-        />
-        {error && <Error>{error}</Error>}
+        <InputWrapper>
+          <Input ref={titleRef} placeholder="Title" defaultValue={title} />
+          <TextArea
+            ref={contentRef}
+            placeholder="Write something here..."
+            defaultValue={content}
+            name=""
+            id=""
+          />
+          {error && <Error>{error}</Error>}
+        </InputWrapper>
 
         <ButtonWrapper>
-          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleSave}>
+            <div>Save</div>
+          </Button>
           {!initialEditorEmpty && (
             <DialogClose asChild>
-              <Button onClick={() => deleteNote(currentDate)}>Delete</Button>
+              <Button onClick={() => deleteNote(currentDate)}>
+                <div>Delete</div>
+              </Button>
             </DialogClose>
           )}
         </ButtonWrapper>
@@ -103,10 +109,10 @@ const Left = styled.div`
 const Form = styled.form`
   padding: ${styleTokens.space[4]};
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 30rem;
+  flex-direction: row;
   height: 100%;
+  width: 100%;
+  gap: ${styleTokens.space[4]};
 `;
 const TextArea = styled.textarea`
   font-size: ${styleTokens.size.base};
@@ -126,6 +132,12 @@ const TextArea = styled.textarea`
     max-height: 30rem;
   }
 `;
+const InputWrapper = styled.div`
+  width: 100%;
+  max-width: 30rem;
+  display: flex;
+  flex-direction: column;
+`;
 const Input = styled.input`
   font-size: ${styleTokens.size.base};
   padding: ${styleTokens.space[4]} ${styleTokens.space[2]};
@@ -141,19 +153,24 @@ const Input = styled.input`
   }
 `;
 const ButtonWrapper = styled.div`
-  margin-top: ${styleTokens.space[4]};
+  height: fit-content;
   display: flex;
+  flex-direction: column;
   gap: ${styleTokens.space[2]};
   font-size: ${styleTokens.size.base};
 `;
 const Button = styled(ButtonBase)`
-  padding: ${styleTokens.space[2]} ${styleTokens.space[4]};
+  padding: ${styleTokens.space[4]} ${styleTokens.space[2]};
   background-color: transparent;
   border: 1px dashed ${styleTokens.color.slate[300]};
   color: ${styleTokens.color.gray[400]};
   flex-grow: 1;
   text-align: center;
   justify-content: center;
+
+  & > div {
+    writing-mode: vertical-lr;
+  }
 `;
 const Error = styled.p`
   color: ${styleTokens.color.orange};
