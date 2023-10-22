@@ -1,24 +1,26 @@
 "use client";
 import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
-import { NOTES_DATA_V2 } from "@/lib/data-v2";
 import { type NotesDataV2 } from "@/types/note";
 import { format } from "date-fns";
 import { Cookie, HelpCircle } from "lucide-react";
 import { ButtonBase } from "../UI/Button";
 import { useLayout } from "@/context/LayoutContext";
+import { useNotesV2 } from "@/context/NotesContextV2";
+import SidebarRow from "./SidebarRow";
+export interface NoteForSidebar {
+  date: Date;
+  dateShort: string;
+  content: string;
+  title: string;
+}
 
 export default function Sidebar() {
-  interface Note {
-    date: Date;
-    dateShort: string;
-    text: string;
-    title: string;
-  }
+  const { notes } = useNotesV2();
 
   /** Move this into context I guess */
-  function convertNotesDataToArray(data: NotesDataV2): Note[] {
-    const notesArray: Note[] = [];
+  function convertNotesDataToArray(data: NotesDataV2): NoteForSidebar[] {
+    const notesArray: NoteForSidebar[] = [];
 
     for (const year in data) {
       for (const month in data[Number(year)]) {
@@ -31,7 +33,7 @@ export default function Sidebar() {
           notesArray.push({
             date,
             dateShort,
-            text: note.text,
+            content: note.content,
             title: note.title,
           });
         }
@@ -41,8 +43,7 @@ export default function Sidebar() {
     return notesArray;
   }
 
-  const notesArray = convertNotesDataToArray(NOTES_DATA_V2);
-
+  const notesArray = convertNotesDataToArray(notes);
   const { sidebarOpen } = useLayout();
 
   if (!sidebarOpen) return null;
@@ -53,21 +54,9 @@ export default function Sidebar() {
         <Title>All Notes</Title>
       </SidebarHeader>
       <SidebarContent>
-        {notesArray.map((note) => {
-          const splitDate = note.dateShort.split(" ");
-          return (
-            <Row key={note.date.getTime()}>
-              <RowInner>
-                <span>
-                  <strong>{splitDate[0]} </strong>
-                  {splitDate[1]}
-                </span>
-
-                <span>{note.text}</span>
-              </RowInner>
-            </Row>
-          );
-        })}
+        {notesArray.map((note) => (
+          <SidebarRow note={note} key={`sidebar-${note.date.getTime()}`} />
+        ))}
       </SidebarContent>
       <SidebarFooter>
         <ButtonBase
@@ -105,22 +94,7 @@ const Wrapper = styled.div`
     overflow-y: auto;
   }
 `;
-const Row = styled.button`
-  border-top: 1px solid ${styleTokens.color.gray[200]};
-  width: 100%;
-`;
-const RowInner = styled.div`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  padding: ${styleTokens.space[4]} ${styleTokens.space[8]};
-  display: block;
 
-  & > span:first-of-type {
-    margin-right: ${styleTokens.space[4]};
-    color: ${styleTokens.color.slate[300]};
-  }
-`;
 const SidebarHeader = styled.div`
   flex-shrink: 0;
 `;

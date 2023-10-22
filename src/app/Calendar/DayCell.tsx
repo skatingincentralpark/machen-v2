@@ -2,7 +2,7 @@ import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
 import { DialogContent, DialogRoot, DialogTrigger } from "../UI/Dialog";
 import { useDate } from "@/context/DateContext";
-import PlainTextEditor from "./Editor";
+import PlainTextEditor, { EditorDialogContent } from "./Editor";
 import { useState } from "react";
 
 interface Props {
@@ -44,13 +44,13 @@ export default function DayCell({ date, currentDate, content, title }: Props) {
           <DateBadge variant={getVariant()}>{date.getDate()}</DateBadge>
         </Cell>
       </DialogTrigger>
-      <SDialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
+      <EditorDialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
         <PlainTextEditor
           content={content}
           title={title}
           close={() => setOpen(false)}
         />
-      </SDialogContent>
+      </EditorDialogContent>
     </DialogRoot>
   );
 }
@@ -133,32 +133,4 @@ const DateBadge = styled.div<DateBadgeProps>`
     font-size: ${styleTokens.size["lg"]};
     font-weight: bold;
   }
-`;
-const SDialogContent = styled(DialogContent)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  max-height: 100dvh;
-  z-index: 10;
-
-  background: linear-gradient(270deg, #dde3e4, #dcedf0);
-  background-size: 600% 600%;
-
-  animation: AnimationName 30s ease infinite;
-
-  @keyframes AnimationName {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  display: flex;
 `;

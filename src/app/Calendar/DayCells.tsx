@@ -7,12 +7,9 @@ import {
   endOfWeek,
   startOfMonth,
   startOfWeek,
-  subDays,
-  subWeeks,
 } from "date-fns";
 import { useDate } from "@/context/DateContext";
 import { styleTokens } from "@/lib/style-tokens";
-import { NOTES_DATA_V2 } from "@/lib/data-v2";
 import DayCell from "./DayCell";
 import { useNotesV2 } from "@/context/NotesContextV2";
 
@@ -68,7 +65,7 @@ export default function DayCells() {
     <Cells>
       {cells.map((cell, index) => (
         <DayCell
-          key={`${cell.date.getMonth()}/${index}`}
+          key={`cell-${cell.date.getMonth()}/${index}`}
           currentDate={currentDate}
           date={cell.date}
           title={cell.title}

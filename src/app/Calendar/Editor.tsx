@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { DialogClose } from "../UI/Dialog";
+import { DialogClose, DialogContent } from "../UI/Dialog";
 import { styleTokens } from "@/lib/style-tokens";
 import { useDate } from "@/context/DateContext";
 import { ChevronRight } from "lucide-react";
@@ -155,4 +155,33 @@ const Button = styled(ButtonBase)`
 const Error = styled.p`
   color: ${styleTokens.color.orange};
   font-size: ${styleTokens.size.xs};
+`;
+
+export const EditorDialogContent = styled(DialogContent)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 100dvh;
+  z-index: 10;
+
+  background: linear-gradient(270deg, #dde3e4, #dcedf0);
+  background-size: 600% 600%;
+
+  animation: AnimationName 30s ease infinite;
+
+  @keyframes AnimationName {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  display: flex;
 `;
