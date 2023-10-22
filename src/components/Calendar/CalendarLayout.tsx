@@ -12,8 +12,8 @@ export default function CalendarLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <LayoutController>
+    <LayoutController>
+      <Main>
         <MonthYearSelector />
         <Wrapper>
           <Header>
@@ -22,12 +22,18 @@ export default function CalendarLayout({
           {children}
         </Wrapper>
         <Sidebar />
-      </LayoutController>
-    </>
+      </Main>
+    </LayoutController>
   );
 }
 
+const Main = styled.main`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+`;
 const Wrapper = styled.div`
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   height: 100%;

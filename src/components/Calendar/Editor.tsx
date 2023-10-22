@@ -109,6 +109,7 @@ const Form = styled.form`
   height: 100%;
 `;
 const TextArea = styled.textarea`
+  font-size: ${styleTokens.size.base};
   padding: ${styleTokens.space[4]} ${styleTokens.space[2]};
   background-color: transparent;
   border: 1px dashed ${styleTokens.color.slate[300]};
@@ -126,6 +127,7 @@ const TextArea = styled.textarea`
   }
 `;
 const Input = styled.input`
+  font-size: ${styleTokens.size.base};
   padding: ${styleTokens.space[4]} ${styleTokens.space[2]};
   background-color: transparent;
   border: 1px dashed ${styleTokens.color.slate[300]};
@@ -142,6 +144,7 @@ const ButtonWrapper = styled.div`
   margin-top: ${styleTokens.space[4]};
   display: flex;
   gap: ${styleTokens.space[2]};
+  font-size: ${styleTokens.size.base};
 `;
 const Button = styled(ButtonBase)`
   padding: ${styleTokens.space[2]} ${styleTokens.space[4]};

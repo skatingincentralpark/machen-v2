@@ -28,9 +28,9 @@ export default function MonthYearSelector() {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
   position: relative;
-
+  width: min-content;
+  height: 100%;
   outline: 1px solid ${styleTokens.color.gray[300]};
   outline-offset: -0.5px;
 `;
@@ -51,15 +51,21 @@ const monthButtonVariants = {
 } as const;
 const MonthButton = styled(ButtonBaseMonthYear)<MonthButtonProps>`
   text-transform: uppercase;
-  aspect-ratio: 1;
-  max-height: 3rem;
   outline: 1px solid ${styleTokens.color.gray[300]};
   outline-offset: -0.5px;
   background-color: ${({ variant }) => monthButtonVariants[variant].bgColor};
   color: ${({ variant }) => monthButtonVariants[variant].color};
+  max-height: 3rem;
+  flex-grow: 1;
+  width: 100%;
+  aspect-ratio: initial;
 
   &:active {
     background-color: ${({ variant }) =>
       monthButtonVariants[variant].activeBgColor};
+  }
+
+  ${styleTokens.media.sm} {
+    aspect-ratio: 1;
   }
 `;

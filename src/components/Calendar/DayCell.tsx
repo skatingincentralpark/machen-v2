@@ -66,8 +66,8 @@ const Cell = styled.button<CellProps>`
   font-weight: bold;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   padding: ${styleTokens.space[1]};
   height: fit-content;
   aspect-ratio: 1;
@@ -78,6 +78,8 @@ const Cell = styled.button<CellProps>`
     padding: ${styleTokens.space[2]};
     height: 100%;
     aspect-ratio: initial;
+    align-items: flex-end;
+    justify-content: flex-start;
   }
 
   &:active {
@@ -118,13 +120,17 @@ const DateBadge = styled.div<DateBadgeProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
-  font-size: ${styleTokens.size["2xl"]};
   font-weight: normal;
   transition: font-size 0.2s ease-in-out, background-color 0.2s ease-in-out;
   outline: 1px solid transparent;
   outline-color: ${({ variant }) => badgeVariants[variant].outlineColor};
+  width: 100%;
+
+  font-size: ${styleTokens.size["base"]};
+
+  ${styleTokens.media.xs} {
+    font-size: ${styleTokens.size["2xl"]};
+  }
 
   ${styleTokens.media.sm} {
     padding: ${styleTokens.space[2]};

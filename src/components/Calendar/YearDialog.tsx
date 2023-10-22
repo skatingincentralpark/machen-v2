@@ -32,13 +32,13 @@ export default function YearDialog() {
       </DialogTrigger>
       <Content>
         {years.map((y) => (
-          <VerticalButton
+          <VerticalButtonSpaced
             key={`year-btn-${y}`}
             onClick={() => setCurrentDate(setYear(currentDate, y))}
             variant={currentYear === y ? "selected" : "default"}
           >
             <div>{y}</div>
-          </VerticalButton>
+          </VerticalButtonSpaced>
         ))}
       </Content>
     </DialogRoot>
@@ -74,13 +74,21 @@ const VerticalButton = styled(ButtonBaseMonthYear)<VerticalButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
   outline: 1px solid ${styleTokens.color.gray[300]};
   outline-offset: -0.5px;
   background-color: ${({ variant }) => verticalButtonVariants[variant].bgColor};
   color: ${({ variant }) => verticalButtonVariants[variant].color};
+  padding: ${styleTokens.space[4]} ${styleTokens.space[2]};
 
   & > div {
     writing-mode: vertical-rl;
   }
+
+  ${styleTokens.media.sm} {
+    padding: 0;
+  }
+`;
+
+const VerticalButtonSpaced = styled(ButtonBaseMonthYear)<VerticalButtonProps>`
+  padding: 1rem;
 `;

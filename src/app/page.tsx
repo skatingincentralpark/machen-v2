@@ -18,9 +18,5 @@ const Placeholder = styled.h2`
 `;
 
 export default function Page() {
-  return (
-    <>
-      <Calendar />
-    </>
-  );
+  return <Calendar />;
 }
