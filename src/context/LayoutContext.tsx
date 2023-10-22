@@ -2,9 +2,7 @@
 
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
-  type Dispatch,
   type ReactNode,
-  type SetStateAction,
   createContext,
   useContext,
   useState,

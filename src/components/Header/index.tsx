@@ -2,7 +2,11 @@
 
 import { styleTokens } from "@/lib/style-tokens";
 import styled from "@emotion/styled";
-import { AlignLeft, Plus, Cookie, Sun } from "lucide-react";
+import {
+  AlignLeft,
+  Sun,
+  // Plus, Cookie,
+} from "lucide-react";
 import { ButtonBase } from "../UI/Button";
 import { useLayout } from "@/context/LayoutContext";
 import { useDate } from "@/context/DateContext";

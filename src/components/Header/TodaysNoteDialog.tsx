@@ -2,7 +2,7 @@ import PlainTextEditor, {
   EditorDialogContent,
 } from "@/components/Calendar/Editor";
 import { DialogRoot, DialogTrigger } from "../UI/Dialog";
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { useNotesV2 } from "@/context/NotesContext";
 
 export default function TodaysNoteDialog({ trigger }: { trigger: ReactNode }) {
