@@ -19,17 +19,15 @@ export default function RootLayout({
       >
         <DateController>
           <NotesControllerV2>
-            <NotesController>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  height: "100%",
-                }}
-              >
-                {children}
-              </div>
-            </NotesController>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                height: "100%",
+              }}
+            >
+              {children}
+            </div>
           </NotesControllerV2>
         </DateController>
       </body>

@@ -15,13 +15,13 @@ export default function Editor({
   content: string | undefined;
 }) {
   const { medDateString, currentDate } = useDate();
-  const { saveNote } = useNotesV2();
+  const { saveNote, deleteNote } = useNotesV2();
   const dateStringSplit = medDateString.split(" ");
 
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
 
-  console.log("rendering editor");
+  const initialEditorEmpty = !title && !content;
 
   const handleSave = () => {
     const title = titleRef.current?.value;
@@ -30,10 +30,6 @@ export default function Editor({
     if (!title && !content)
       return console.error("title and content are both empty");
 
-    /**
-     * title and no content should be allowed
-     * content and no title should be allowed
-     */
     if (title && content) {
       saveNote(title, content, currentDate);
     }
@@ -66,9 +62,13 @@ export default function Editor({
         <DialogClose asChild>
           <ButtonBase onClick={handleSave}>Save</ButtonBase>
         </DialogClose>
-        <DialogClose asChild>
-          <ButtonBase>Delete</ButtonBase>
-        </DialogClose>
+        {!initialEditorEmpty && (
+          <DialogClose asChild>
+            <ButtonBase onClick={() => deleteNote(currentDate)}>
+              Delete
+            </ButtonBase>
+          </DialogClose>
+        )}
       </Main>
     </Content>
   );

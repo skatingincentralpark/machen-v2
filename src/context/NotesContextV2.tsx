@@ -1,6 +1,6 @@
 "use client";
 
-import { assertIsNotes } from "@/lib/data-v2";
+import { NotesDataV2Schema } from "@/lib/data-v2";
 import { type NotesDataV2 } from "@/types/note";
 import React, {
   type ReactNode,
@@ -57,13 +57,15 @@ const NotesControllerV2 = ({ children }: { children: ReactNode }) => {
 
       const initialValue: unknown = JSON.parse(machenData);
 
-      if (!assertIsNotes(initialValue)) {
+      const val = NotesDataV2Schema.safeParse(initialValue);
+
+      if (!val.success) {
         console.error("Something went wrong retreiving notes data.");
         localStorage.removeItem("machen-data");
         return {};
       }
 
-      return initialValue;
+      return val.data;
     }
 
     setNotes(getDataFromStorage());
@@ -76,12 +78,11 @@ const NotesControllerV2 = ({ children }: { children: ReactNode }) => {
     const dummyNotes = await fetch(`${baseUrl}/api/notes`);
     const dummyNotesData: unknown = await dummyNotes.json();
 
-    if (!assertIsNotes(dummyNotesData)) {
-      throw new Error("The dummy notes data is not valid.");
-    }
+    const data = NotesDataV2Schema.safeParse(dummyNotesData);
+    if (!data.success) throw new Error("The dummy notes data is not valid.");
 
-    setNotes(dummyNotesData);
-    localStorage.setItem("machen-data", JSON.stringify(dummyNotesData));
+    setNotes(data);
+    localStorage.setItem("machen-data", JSON.stringify(data));
   }
 
   function isEditorEmpty(title: string, content: string) {

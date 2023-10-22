@@ -37,56 +37,13 @@ export const NOTES_DATA_V2: NotesDataV2 = {
   },
 };
 
-/** Will also return true if empty object */
-export const assertIsNotes = (value: unknown): value is NotesDataV2 => {
-  if (typeof value !== "object" || value === null) return false;
+import { z } from "zod";
 
-  function isNumeric(str: string) {
-    if (typeof str !== "string") return false;
-    return !isNaN(+str) && !isNaN(parseFloat(str));
-  }
-
-  if (
-    !Object.entries(value).every(([year, yearValue]) => {
-      if (
-        !isNumeric(year) ||
-        typeof yearValue !== "object" ||
-        yearValue === null
-      ) {
-        return false;
-      }
-
-      /* eslint-disable */
-      return Object.entries(yearValue).every(([month, monthValue]) => {
-        if (
-          !isNumeric(month) ||
-          typeof monthValue !== "object" ||
-          monthValue === null
-        ) {
-          return false;
-        }
-
-        return Object.entries(monthValue).every(([day, dayValue]) => {
-          if (
-            !isNumeric(day) ||
-            typeof dayValue !== "object" ||
-            dayValue === null
-          ) {
-            return false;
-          }
-
-          /* eslint-disable */
-          if (typeof dayValue.text !== "string") {
-            return false;
-          }
-
-          return true;
-        });
-      });
-    })
-  ) {
-    return false;
-  }
-
-  return true;
-};
+const Note = z.object({
+  title: z.string(),
+  content: z.string(),
+});
+const Day = z.record(Note);
+const Month = z.record(Day);
+const Year = z.record(Month);
+export const NotesDataV2Schema = Year;
