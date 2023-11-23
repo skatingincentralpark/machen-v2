@@ -16,7 +16,7 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: end;
-  padding: 1rem;
+  padding: 1rem 1rem 5rem 1rem;
 
   ${media.sm} {
     padding: 2rem;

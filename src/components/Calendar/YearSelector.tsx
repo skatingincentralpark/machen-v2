@@ -14,13 +14,22 @@ import { setYear } from "date-fns";
 import { Button } from "../UI/Button";
 import { useDate } from "@/context/DateContext";
 
+import { useTransition } from "react-transition-state";
+
 const YearSelector = () => {
   const { currentDate, setCurrentDate } = useDate();
   const years = [2017, 2018, 2019, 2021, 2022, 2023, 2024];
   const currentYear = currentDate.getFullYear();
 
+  const [{ status, isMounted }, toggle] = useTransition({
+    timeout: 200,
+    mountOnEnter: true,
+    unmountOnExit: true,
+    preEnter: true,
+  });
+
   return (
-    <CalendarSheet>
+    <CalendarSheet open={isMounted} onOpenChange={toggle}>
       <CalendarSheetTrigger asChild>
         <YearTrigger title="Select a year">
           <div>{currentYear}</div>
@@ -28,7 +37,7 @@ const YearSelector = () => {
       </CalendarSheetTrigger>
 
       <CalendarSheetContent>
-        <Inner>
+        <Inner status={status}>
           <CalendarSheetTitle className="sr-only">
             Select Year
           </CalendarSheetTitle>

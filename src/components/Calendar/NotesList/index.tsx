@@ -16,6 +16,7 @@ import { ScrollArea } from "@/components/UI/ScrollArea";
 import { Button } from "@/components/UI/Button";
 
 import dynamic from "next/dynamic";
+import useTransition from "react-transition-state";
 
 const NoteViewer = dynamic(() => import("./NoteViewer"), {
   ssr: false,
@@ -33,14 +34,29 @@ const LoadingWrapper = styled.div`
 `;
 
 const NotesList = () => {
+  const [{ status, isMounted }, toggle] = useTransition({
+    timeout: {
+      enter: 200,
+      exit: 200,
+    },
+    mountOnEnter: true,
+    unmountOnExit: true,
+    preEnter: true,
+  });
+
   return (
-    <CalendarSheet>
+    <CalendarSheet open={isMounted} onOpenChange={toggle}>
       <CalendarSheetTrigger asChild>
         <Trigger>All Notes</Trigger>
       </CalendarSheetTrigger>
 
       <CalendarSheetContent>
-        <NotesListContent />
+        <Inner startRow={2} status={status}>
+          <NotesListContent />
+        </Inner>
+        <CalendarSheetClose asChild>
+          <CalendarSheetOverlay />
+        </CalendarSheetClose>
       </CalendarSheetContent>
     </CalendarSheet>
   );
@@ -101,35 +117,29 @@ const NotesListContent = () => {
 
   return (
     <>
-      <Inner startRow={2}>
-        <CalendarSheetTitle className="sr-only">
-          All Your Notes
-        </CalendarSheetTitle>
-
-        <CalendarSheetClose asChild>
-          <Button>Close</Button>
-        </CalendarSheetClose>
-
-        <ScrollArea viewport={{ border: "none" }}>
-          <ScrollAreaInner>
-            {notesArray.length === 0 && (
-              <p>You haven&apos;t written any notes yet.</p>
-            )}
-
-            {notesArray.map((note) => (
-              <NoteViewer
-                editorStateString={note.text}
-                key={note.date.toLocaleDateString()}
-                date={note.date}
-              />
-            ))}
-          </ScrollAreaInner>
-        </ScrollArea>
-      </Inner>
+      <CalendarSheetTitle className="sr-only">
+        All Your Notes
+      </CalendarSheetTitle>
 
       <CalendarSheetClose asChild>
-        <CalendarSheetOverlay />
+        <Button>Close</Button>
       </CalendarSheetClose>
+
+      <ScrollArea viewport={{ border: "none" }}>
+        <ScrollAreaInner>
+          {notesArray.length === 0 && (
+            <p>You haven&apos;t written any notes yet.</p>
+          )}
+
+          {notesArray.map((note) => (
+            <NoteViewer
+              editorStateString={note.text}
+              key={note.date.toLocaleDateString()}
+              date={note.date}
+            />
+          ))}
+        </ScrollAreaInner>
+      </ScrollArea>
     </>
   );
 };

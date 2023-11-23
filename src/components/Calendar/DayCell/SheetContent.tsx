@@ -13,6 +13,7 @@ import { type NoteEditorProps } from "./NoteEditor";
 
 import { media } from "@/lib/media-queries";
 import dynamic from "next/dynamic";
+import { type TransitionStatus } from "react-transition-state";
 
 const NoteEditor = dynamic(() => import("./NoteEditor"), {
   ssr: false,
@@ -23,12 +24,17 @@ const Loading = () => <div role="progressbar">Loading...</div>;
 
 interface Props extends NoteEditorProps {
   localeDateString: string;
+  transitionStatus: TransitionStatus;
 }
 
-const DayCellCalendarSheetContent = ({ localeDateString, ...props }: Props) => {
+const DayCellCalendarSheetContent = ({
+  localeDateString,
+  transitionStatus,
+  ...props
+}: Props) => {
   return (
     <CalendarSheetContent>
-      <CalendarSheetContentInnerV2 startRow={2}>
+      <CalendarSheetContentInnerV2 startRow={2} status={transitionStatus}>
         <Inner>
           <CalendarSheetTitle>
             Note for date: {localeDateString}

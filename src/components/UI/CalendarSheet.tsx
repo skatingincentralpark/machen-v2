@@ -1,7 +1,12 @@
 import styled from "@emotion/styled";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
+import type { TransitionStatus } from "react-transition-state";
 
-interface SheetProps {
+export interface Transition {
+  status: TransitionStatus;
+  duration?: number;
+}
+interface SheetProps extends Transition {
   startRow?: number;
   endRow?: number;
   startCol?: number;
@@ -21,6 +26,7 @@ export const CalendarSheetContent = styled(SheetPrimitive.Content)`
   display: grid;
   grid-template-columns: 2rem auto;
   grid-template-rows: 2rem repeat(6, 1fr);
+  overflow: hidden;
 `;
 export const CalendarSheetContentInner = styled.div<SheetProps>`
   pointer-events: auto;
@@ -35,6 +41,18 @@ export const CalendarSheetContentInner = styled.div<SheetProps>`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  transition: ${({ duration }) =>
+    `opacity ${duration ?? 200}ms cubic-bezier(0.25, 1, 0.5, 1), 
+    transform ${duration ?? 200}ms cubic-bezier(0.25, 1, 0.5, 1)
+    `};
+
+  ${({ status }) =>
+    (status === "preEnter" || status === "exiting") &&
+    `
+      opacity: 0;
+      transform: translateY(100%);
+    `}
 `;
 export const CalendarSheetOverlay = styled(SheetPrimitive.Overlay)`
   position: absolute;

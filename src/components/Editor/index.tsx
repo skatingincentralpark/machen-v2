@@ -10,7 +10,6 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import { ListPlugin } from "./plugins/ListPlugin";
-import { AutoFocusPlugin } from "./plugins/LexicalAutoFocusPlugin";
 
 import { media } from "@/lib/media-queries";
 import { ScrollArea } from "@/components/UI/ScrollArea";
@@ -54,7 +53,8 @@ function EditorComponents({ editorStateString, readOnly = false }: Props) {
       {!readOnly && <ToolbarPlugin />}
       <ScrollArea>
         <EditorInner>
-          {!readOnly && <AutoFocusPlugin />}
+          {/* Autofocus and scroll area seem to be causing animation jank */}
+          {/* {!readOnly && <AutoFocusPlugin />} */}
           <RichTextPlugin
             contentEditable={<SContentEditable className="editor-input" />}
             placeholder={(isEditable) =>

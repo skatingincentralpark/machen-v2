@@ -1,10 +1,13 @@
 import Header from "@/components/Header";
 import "@/styles/global.css";
-// import { Inter } from "next/font/google";
+import { Abel } from "next/font/google";
 import { NotesController } from "@/context/NotesContext";
 import { DateController } from "@/context/DateContext";
 
-// const inter = Inter({ subsets: ["latin"] });
+const abel = Abel({
+  subsets: ["latin"],
+  weight: ["400"],
+});
 
 export default function RootLayout({
   children,
@@ -13,9 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-      // className={inter.className}
-      >
+      <body className={abel.className}>
         <DateController>
           <NotesController>
             <Header />

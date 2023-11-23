@@ -12,6 +12,7 @@ import { weekdays } from "@/lib/date";
 import DayCellCalendarSheetContent from "./SheetContent";
 import { useDate } from "@/context/DateContext";
 import { useEffect, useState } from "react";
+import useTransition from "react-transition-state";
 
 interface Props {
   date: Date;
@@ -20,7 +21,6 @@ interface Props {
 }
 
 const DayCell = ({ date, currentDate, text }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
   const { setCurrentDate } = useDate();
   const localeDateString = date.toLocaleDateString(undefined, {
@@ -40,11 +40,18 @@ const DayCell = ({ date, currentDate, text }: Props) => {
     setIsRendered(true);
   }, []);
 
+  const [{ status, isMounted }, toggle] = useTransition({
+    timeout: {
+      enter: 200,
+      exit: 200,
+    },
+    mountOnEnter: true,
+    unmountOnExit: true,
+    preEnter: true,
+  });
+
   return (
-    <CalendarSheet
-      open={isOpen}
-      onOpenChange={() => !notCurrentMonth && setIsOpen((prev) => !prev)}
-    >
+    <CalendarSheet open={isMounted} onOpenChange={toggle}>
       <CalendarSheetTrigger asChild>
         <Cell
           role="gridcell"
@@ -68,8 +75,9 @@ const DayCell = ({ date, currentDate, text }: Props) => {
           {date.getDate()}
         </Cell>
       </CalendarSheetTrigger>
-      {isOpen && (
+      {isMounted && (
         <DayCellCalendarSheetContent
+          transitionStatus={status}
           currentDate={currentDate}
           text={text}
           localeDateString={localeDateString}
