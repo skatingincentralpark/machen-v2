@@ -103,16 +103,17 @@ const SContentEditable = styled(ContentEditable)`
   outline: 0;
   padding: 15px 10px;
   caret-color: #444;
+  font-size: 16px;
 
   .editor-heading-h1 {
     scroll-margin: 5rem;
-    font-size: 2rem;
+    font-size: 2em;
     line-height: 2.3rem;
     font-weight: 800;
     letter-spacing: -0.025em;
 
     ${media.lg} {
-      font-size: 2.5rem;
+      font-size: 2.5em;
       line-height: 1;
     }
   }
@@ -120,7 +121,7 @@ const SContentEditable = styled(ContentEditable)`
   .editor-heading-h2 {
     scroll-margin: 5rem;
     padding-bottom: 0.5rem;
-    font-size: 1.625rem;
+    font-size: 1.625em;
     line-height: 2.2rem;
     font-weight: 600;
     letter-spacing: -0.025em;
@@ -180,7 +181,7 @@ const SContentEditable = styled(ContentEditable)`
     background-color: rgb(240, 242, 245);
     padding: 1px 0.25rem;
     font-family: Menlo, Consolas, Monaco, monospace;
-    font-size: 94%;
+    font-size: 0.95em;
   }
 
   .editor-link {
@@ -196,7 +197,7 @@ const Placeholder = styled.p`
   text-overflow: ellipsis;
   top: 15px;
   left: 10px;
-  font-size: 15px;
+  font-size: 16px;
   user-select: none;
   display: inline-block;
   pointer-events: none;
