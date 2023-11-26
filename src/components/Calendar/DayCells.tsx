@@ -1,13 +1,12 @@
 "use client";
 import styled from "@emotion/styled";
 import {
+  addDays,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
   startOfMonth,
   startOfWeek,
-  subDays,
-  subWeeks,
 } from "date-fns";
 import DayCell from "@/components/Calendar/DayCell";
 import { useNotes } from "@/context/NotesContext";
@@ -24,18 +23,20 @@ const DayCells = () => {
 
   const firstDayOfMonth = startOfMonth(currentDate);
   const lastDayOfMonth = endOfMonth(currentDate);
+  const startOfFirstWeek = startOfWeek(firstDayOfMonth);
+  const endOfLastWeek = endOfWeek(lastDayOfMonth);
 
   const datesInMonth = eachDayOfInterval({
-    start: startOfWeek(firstDayOfMonth),
-    end: endOfWeek(lastDayOfMonth),
+    start: startOfFirstWeek,
+    end: endOfLastWeek,
   });
 
   /** To ensure 42 cells always */
   const extraDatesInMonth =
     datesInMonth.length === 35
       ? eachDayOfInterval({
-          start: subWeeks(startOfWeek(firstDayOfMonth), 1),
-          end: subDays(startOfWeek(firstDayOfMonth), 1),
+          start: addDays(endOfLastWeek, 1),
+          end: endOfWeek(addDays(endOfLastWeek, 1)),
         })
       : [];
 

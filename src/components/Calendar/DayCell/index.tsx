@@ -57,7 +57,9 @@ const DayCell = ({ date, currentDate, text }: Props) => {
           role="gridcell"
           name="day-cell"
           data-testid="day-cell"
-          onClick={() => {
+          onClick={(e) => {
+            // Prevent editor from opening if not current month
+            notCurrentMonth && e.preventDefault();
             setCurrentDate(date);
           }}
           isSelected={
@@ -71,6 +73,9 @@ const DayCell = ({ date, currentDate, text }: Props) => {
           }
           className={text !== undefined ? "has-note" : ""}
           title={text !== undefined ? "has-note" : ""}
+          // Prevent screen readers from reading out-of-month cells
+          // Also helps with finding cells with notes in the current month when testing
+          aria-hidden={notCurrentMonth}
         >
           {date.getDate()}
         </Cell>
